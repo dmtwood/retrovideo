@@ -4,38 +4,34 @@
 <body>
 <table>
     <tr>
-       <td> <a th:href="@{/}">Genres </a> </td>
-        <td> <a th:href="@{/mandje}">Mandje </a> </td>
-        <td> <a th:href="@{/klant}">Klant </a> </td>
+        <td><a th:href="@{/}">Genres </a></td>
+        <td><a th:href="@{/mandje}">Mandje </a></td>
+        <td><a th:href="@{/klant}">Klant </a></td>
     </tr>
 </table>
 <h1> Mandje </h1>
 
-<span th:if="${filmsInMandje}"
+<span th:if="${filmsInMandje}==null">
+<h2>Mandje is leeg</h2></span>
+
+<!--ad id to mandje list HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+ <form th:action="@{/Mandje}" th:href="@{MandjeForm}">
+     <table id="tabel">
+        <tr>
+            <th>Film</th>
+            <th>Prijs</th>
+            <th><input type='submit' value='Verwijderen' id='verwijderknop'></th>
+        </tr>
+         <tr th:each="film:${filmsInMandje}" th:object="${film}">
+             <td th:text="${film.titel}"></td>
+             <td th:text="${film.prijs}"></td>
+             <td> <input th:type="checkbox" th:name="verwijderid" th:value="${film.id}"></td>
+         </tr>
+     </table>
+ </form>
 
 
-<!--<vdab:menu />-->
-<!--<h1>Mandje</h1>-->
-<!--<c:if test='${empty filmsInMandje}'>-->
-<!--    <h2>mandje is leeg</h2>-->
-<!--</c:if>-->
-<!--<c:if test='${not empty filmsInMandje}'>-->
-<!--    <c:url value='/mandje' var='url' />-->
-<!--    <form action='${url}' method='post' id='mandjeform'>-->
-<!--        <table id="tabel">-->
-<!--            <tr>-->
-<!--                <th>Film</th>-->
-<!--                <th>Prijs</th>-->
-<!--                <th><input type='submit' value='Verwijderen'-->
-<!--                           id='verwijderknop'></th>-->
-<!--            </tr>-->
-<!--            <c:forEach items='${filmsInMandje}' var='film'>-->
-<!--                <tr>-->
-<!--                    <td><c:out value='${film.titel}' /></td>-->
-<!--                    <td class="prijs"><spring:eval expression='film.prijs' /></td>-->
-<!--                    <td><input type='checkbox' name='verwijderid'-->
-<!--                               value='${film.id}'></td>-->
-<!--                </tr>-->
+
 <!--            </c:forEach>-->
 <!--            <tr>-->
 <!--                <td>Totaal:</td>-->
@@ -49,11 +45,13 @@
 <!--    <p>filmnr: ${param.reedsInMandje} is reeds aanwezig in het mandje</p>-->
 <!--</c:if>-->
 
-<!--<script>-->
-<!--    document.getElementById('mandjeform').onsubmit = function() {-->
-<!--        document.getElementById('verwijderknop').disabled = true;-->
-<!--    };-->
-<!--</script>-->
+
+
+<script>
+    document.getElementById('mandjeform').onsubmit = function() {
+        document.getElementById('verwijderknop').disabled = true;
+    };
+</script>
 
 </body>
 </html>

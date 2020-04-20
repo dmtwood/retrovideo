@@ -27,7 +27,7 @@
 
 <div th:if="${film.gereserveerd} < ${film.voorraad}">
     <form th:object="${film}" method="post" th:action="@{/mandje}">
-        <input type="submit" th:value="'In mandje'">
+        <input type="submit" th:value="'In mandje'" >
     </form>
 </div>
 

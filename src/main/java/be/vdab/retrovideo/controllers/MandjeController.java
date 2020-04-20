@@ -51,9 +51,20 @@ class MandjeController {
 		List<BigDecimal> prijzen = maakPrijzenVanFilmsIds(mandje.getFilmIds());
 		ModelAndView modelAndView = new ModelAndView(MANDJE_VIEW);
 		modelAndView.addObject("filmsInMandje", films);
+
 		modelAndView.addObject("totalePrijs", mandje.berekenTotalePrijs(prijzen));
 		return modelAndView;
 	}
+
+
+
+
+
+
+
+
+
+
 
 	@GetMapping("?reedsInMandje")
     ModelAndView toonMandjeIgvDubbeleFilm(@PathVariable int reedsInMandje) {
