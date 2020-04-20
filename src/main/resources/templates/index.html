@@ -1,0 +1,38 @@
+<!--    Je associeert de prefix th met de URI van de Thymeleaf library: http://www.thymeleaf.org.  cf. XML bestanden.-->
+<!--    Je neemt later met die prefix code (if, for, ...) op in de pagina.-->
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head(title='RETRO VIDEO - genres')"></head>
+
+<body>
+
+
+<!--menu-->
+<!--<nav th:replace="fragments::menu"></nav>-->
+
+<!--<a href="@{/}">Reserveren</a>-->
+
+
+<h1>Genres</h1>
+<nav class="menu">
+        <span th:each="genre:${genres}" th:object="${genre}">
+            <a th:href="@{/genres/{id}(id=*{id})}"> <span th:text="${genre.naam}"></span></a>
+        </span>
+</nav>
+
+<span th:each="genreFilm:${genreFilms}" th:object="${genreFilm}">
+<!--    <a th:href="@{/film/{id}(id=*{genreId})}"> a -->
+        <img th:src="@{|/images/${{genreFilm.id}}.jpg|}" alt="*{ge}">
+<!--    </a>-->
+</span>
+
+
+
+<!--<script>-->
+<!--    for (var i = 0; i < document.links.length; i++) {-->
+<!--        if (document.links[i].href == document.URL) {-->
+<!--            document.links[i].className = 'active';-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
+</body>
+</html>

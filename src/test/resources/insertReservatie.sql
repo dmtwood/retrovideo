@@ -1,0 +1,1 @@
+insert into reservaties(klantid,filmid,reservatie) values (1, 2 ,'2018-01-01 20:00'); 

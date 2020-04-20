@@ -1,0 +1,25 @@
+<head th:fragment="head(title)" xmlns:th="http://www.thymeleaf.org">
+
+    <link rel="icon" th:href="@{/images/retrovideo.ico}" type="image/x-icon">
+
+    <title th:text="${title}"></title>
+
+    <link rel="stylesheet" th:href="@{/static/css/retrovideo.css}">
+
+    <meta name='viewport' content='width=device-width,initial-scale=1'>
+</head>
+
+<body>
+
+<!--// als in mandje klikt, toon dit-->
+<nav  th:fragment="menu" xmlns:th="http://www.thymeleaf.org">
+    <span><a href="@{/}">Reserveren</a>
+        <a href="@{/mandje}">Mandje</a>
+        <a href="@{/klant}">Klant</a>
+    </span>
+</nav>
+
+
+<ul th:fragment="reserveren" xmlns:th="http://www.thymeleaf.org">
+    <a href="@{/}">Reserveren</a>
+</ul>
