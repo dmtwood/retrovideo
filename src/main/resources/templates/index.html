@@ -20,9 +20,9 @@
 </nav>
 
 <span th:each="genreFilm:${genreFilms}" th:object="${genreFilm}">
-<!--    <a th:href="@{/film/{id}(id=*{genreId})}"> a -->
-        <img th:src="@{|/images/${{genreFilm.id}}.jpg|}" alt="*{ge}">
-<!--    </a>-->
+    <a th:href="@{/film/{id}(id=*{getId()})}"> a
+        <img th:src="@{|/images/${{genreFilm.id}}.jpg|}" alt="|${{genreFilm.id}}.jpg}|">
+    </a>
 </span>
 
 

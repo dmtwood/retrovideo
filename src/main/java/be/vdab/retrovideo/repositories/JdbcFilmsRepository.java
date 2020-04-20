@@ -39,7 +39,7 @@ public class JdbcFilmsRepository implements FilmsRepository {
 
 
 	private static final String READ =
-			"select id, genreid, titel, voorraad, gereserveerd, prijs from films where id= id";
+			"select id, genreid, titel, voorraad, gereserveerd, prijs from films where id= ?";
 
 	@Override
 	public Optional<Film> read(int id) {
@@ -69,7 +69,8 @@ public class JdbcFilmsRepository implements FilmsRepository {
 
 
 
-	private static final String UPDATE_FILM = "update films set gereserveerd = :gereserveerd where id = :id and gereserveerd < voorraad";
+	private static final String UPDATE_FILM =
+			"update films set gereserveerd = ? where id =? and gereserveerd < voorraad";
 
 	@Override
 	public void update(Film film) {

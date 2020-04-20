@@ -1,10 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head(title=${film.titel})"></head>
+
 <body>
+<p>
+    <a th:href="@{/}">Genres </a>
+</p>
+<h1 th:text="${film.titel}"></h1>
+<img th:src="@{|/images/${{film.id}}.jpg|}" alt="|${{film.id}}.jpg}|">
+
+
+<dl>
+    <dt>Prijs</dt>
+    <dt th:text="${film.prijs}" style="font-weight: bold; padding-left: 0"></dt>
+    <br>
+    <dt>Voorraad</dt>
+    <dt class="bolder" th:text="${film.voorraad}" style="text-align: left; font-weight: bold"></dt>
+    <br>
+    <dt>Gereserveerd</dt>
+    <dt th:text="${film.gereserveerd}" style="font-weight: bold"></dt>
+    <br>
+    <dt>Beschikbaar</dt>
+    <dt th:text="${film.gereserveerd < film.voorraad ? 'ja' : 'nee'}" style="font-weight: bold"></dt>
+    <br>
+</dl>
+
+
+<div th:if="${film.gereserveerd} < ${film.voorraad}">
+    <form th:object="${film}" method="post" th:action="@{/mandje}">
+        <input type="submit" th:value="'In mandje'">
+    </form>
+</div>
+
+<!--<c:if test='${empty film}'>-->
+<!--    <h1>film niet gevonden</h1>-->
+<!--</c:if>-->
+<!--<span th:errors="*{film}"> - niet gevonden </span>-->
+
+
+<!--    <c:if test='${film.gereserveerd < film.voorraad}'>-->
+<!--        <spring:url value='/film/{id}' var='url'>-->
+<!--            <spring:param name='id' value="${film.id}" />-->
+<!--        </spring:url>-->
+<!--        <form:form action='${url}' modelAttribute='mandjeForm' method='post' id='mandjeform'>-->
+<!--            <input type='submit' value='Mandje' id='toevoegknop'>-->
+<!--        </form:form>-->
+<!--    </c:if>-->
+<!--</c:if>-->
+
+<!--<script>-->
+<!--    document.getElementById('mandjeform').onsubmit = function() {-->
+<!--        document.getElementById('toevoegknop').disabled = true;-->
+<!--    };-->
+<!--</script>-->
 
 </body>
 </html>
+
