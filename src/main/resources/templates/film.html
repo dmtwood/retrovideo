@@ -26,8 +26,11 @@
 
 
 <div th:if="${film.gereserveerd} < ${film.voorraad}">
-    <form th:object="${film}" method="post" th:action="@{|/film/${film.id}|}">
-        <input type="submit" th:value="'In mandje'" >
+    <form
+            th:object="${film}"
+            method="post"
+            th:action="@{|/film/${film.id}|}">
+            <input type="submit" th:value="'In mandje'" >
     </form>
 </div>
 

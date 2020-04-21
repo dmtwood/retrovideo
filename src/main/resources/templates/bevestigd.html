@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head('Bevestigd')"></head>
 
+<body>
+<table>
+    <tr>
+        <td><a th:href="@{/}">Genres </a></td>
+    </tr>
+</table>
+
+<h1>Rapport</h1>
+
+<span th:if="${mislukteFilms} == null">
+    <p>De Reservatie is OK</p>
+</span>
+<span th:if="${mislukteFilms}">
+    <p>Volgende reservatie(s) zijn mislukt:</p>
+    <ul th:forEach="titel:${param.mislukteFilms}" th:object="${titel}">
+            <li th:text="${filmTitel}" /></li>
+        </il:forEach>
+    </ul>
+</span>
 </body>
 </html>

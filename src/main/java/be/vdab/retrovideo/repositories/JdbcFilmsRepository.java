@@ -35,9 +35,6 @@ public class JdbcFilmsRepository implements FilmsRepository {
 
 }
 
-
-
-
 	private static final String READ =
 			"select id, genreid, titel, voorraad, gereserveerd, prijs from films where id= ?";
 
@@ -63,21 +60,27 @@ public class JdbcFilmsRepository implements FilmsRepository {
 //
 //
 //
-
-
-
-
-
+//@Override
+//public void update(Snack snack) {
+//	String sql = "update snacks set naam=?, prijs=? where id=?";
+//	if (template.update(sql, snack.getNaam(), snack.getPrijs(), snack.getId()) == 0) {
+//		throw new SnackNietGevondenException();
+//	}
+//}
 
 	private static final String UPDATE_FILM =
-			"update films set gereserveerd = ? where id =? and gereserveerd < voorraad";
+			"update films set gereserveerd=?, voorraad=? where id=? and gereserveerd < voorraad";
 
 	@Override
 	public void update(Film film) {
-		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("gereserveerd", film.getGereserveerd() + 1);
-		parameters.put("id", film.getId());
-		if (template.update(UPDATE_FILM, parameters) == 0) {
+		template.update(UPDATE_FILM, film.getGereserveerd()+1, film.getVoorraad()-1, film.getId());
+//		int nieuwGereserveerd = film.getGereserveerd() +1;
+//
+//		Map<String, Object> parameters = new HashMap<>();
+//		parameters.put("gereserveerd", film.getGereserveerd() + 1);
+//		parameters.put("id", film.getId());
+
+		if (template.update(UPDATE_FILM,film.getGereserveerd()+1, film.getVoorraad()-1, film.getId()) == 0) {
 			throw new FilmNietGevondenException();
 		}
 	}

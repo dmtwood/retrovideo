@@ -18,10 +18,14 @@
 	<span th:text="${klant.familienaam}"></span>
 
 
-	<form:form action="@{/klant/{klant.id}/bevestigd}" modelAttribute='reservatie' method='post'
+	<form
+	th:object="${klant}"
+	    th:action="@{|${klant.id}/bevestigd|}"
+	    modelAttribute='reservatie'
+	    method='post'
 		id='bevestigenform'>
 		<input type='submit' value='Bevestigen' id='toevoegknop'>
-	</form:form>
+	</form>
 
 	<script>
 		document.getElementById('bevestigenform').onsubmit = function() {
