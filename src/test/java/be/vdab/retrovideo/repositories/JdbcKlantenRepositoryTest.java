@@ -14,18 +14,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(SpringRunner.class)
 @JdbcTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
 @Import(JdbcKlantenRepository.class)
 @Sql("/insertKlant.sql")
 
 public class JdbcKlantenRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
 
-	@Autowired
 	private JdbcKlantenRepository repository;
 
 	@Test
@@ -42,14 +40,14 @@ public class JdbcKlantenRepositoryTest extends AbstractTransactionalJUnit4Spring
 		assertEquals(aantalKlanten, klanten.size());
 	}
 
-	private long idVanTestKlant() {
+	 long idVanTestKlant() {
 		return super.jdbcTemplate.queryForObject("select id from klanten where familienaam='testfamilienaam'",
 				Long.class);
 	}
 
 	@Test
 	public void read() {
-		assertEquals("testvoornaam", repository.read(idVanTestKlant()).getVoornaam());
+		assertThat(repository.read(idVanTestKlant()).getFamilienaam().equalsIgnoreCase("testfamilienaam"));
 	}
 
 }

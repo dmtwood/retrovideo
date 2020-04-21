@@ -19,8 +19,7 @@ public class JdbcKlantenRepository implements KlantenRepository {
 	}
 
 	private static final String SELECT_BY_NAAM_BEVAT =
-			"select id, familienaam, voornaam, straatNummer, postcode, gemeente from klanten " +
-					"where familienaam like :zoals order by familienaam";
+			"select id, familienaam, voornaam, straatNummer, postcode, gemeente from klanten where familienaam like ? order by familienaam";
 
 	private final RowMapper<Klant> klantRowMapper = (resultSet, rowNum) ->
 			new Klant(
@@ -35,15 +34,13 @@ public class JdbcKlantenRepository implements KlantenRepository {
 	public List<Klant> findByFamilienaamBevat(String deelNaam) {
 		return template.query(SELECT_BY_NAAM_BEVAT,
 				klantRowMapper,
-				Collections.singletonMap("zoals", '%' + deelNaam + '%'));
+				deelNaam + '%');
 	}
 
-	private static final String READ = "select id, familienaam, voornaam, straatNummer, postcode, gemeente from klanten " +
-			"where id=?";
+	private static final String READ = "select id, familienaam, voornaam, straatNummer, postcode, gemeente from klanten where id=?";
 
 	@Override
 	public Klant read(long id) {
-
 			return template.queryForObject(READ, klantRowMapper, id);
 
 	}

@@ -49,7 +49,7 @@ public class JdbcFilmsRepository implements FilmsRepository {
 	}
 
 	private static final String UPDATE_FILM =
-			"update films set genreid=genreid, titel=titel, voorraad=?, gereserveerd=?, prijs=prijs where id=? and gereserveerd < voorraad";
+			"update films set voorraad=?, gereserveerd=? where id=? and gereserveerd < voorraad";
 	@Override
 	public void update(Film film) {
 		long algereserveerd = film.getGereserveerd();

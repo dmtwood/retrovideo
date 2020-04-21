@@ -45,7 +45,7 @@ public class JdbcFilmsRepositoryTest extends AbstractTransactionalJUnit4SpringCo
 
 	@Test
 	public void readOnbestaandeFilm() {
-		assertThat(repository.read(-1)).isNotPresent();
+		assertThat(repository.read(-1)).isNull();
 	}
 
 	@Test
@@ -53,7 +53,8 @@ public class JdbcFilmsRepositoryTest extends AbstractTransactionalJUnit4SpringCo
 		long id = idVanTestFilm();
 		Film film = new Film(id, 1, "test", 10, 6, BigDecimal.TEN);
 		repository.update(film);
-		assertThat(repository.read(idVanTestFilm()).get().getGereserveerd()).isEqualTo(7);
+		long test = repository.read(idVanTestFilm()).get().getGereserveerd();
+		assertThat(test).isEqualTo(7);
 	}
 
 
