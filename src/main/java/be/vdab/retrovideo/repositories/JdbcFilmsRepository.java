@@ -5,6 +5,7 @@ import be.vdab.retrovideo.exceptions.FilmNietGevondenException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -18,6 +19,7 @@ public class JdbcFilmsRepository implements FilmsRepository {
 
 	JdbcFilmsRepository(JdbcTemplate template) {
 		this.template = template;
+
 	}
 
 	private final RowMapper<Film> filmsRowMapper = (resultSet, rowNum) -> new Film(resultSet.getInt("id"),
@@ -37,7 +39,6 @@ public class JdbcFilmsRepository implements FilmsRepository {
 
 	private static final String READ =
 			"select id, genreid, titel, voorraad, gereserveerd, prijs from films where id= ?";
-
 	@Override
 	public Optional<Film> read(int id) {
 		try {
@@ -47,40 +48,24 @@ public class JdbcFilmsRepository implements FilmsRepository {
 		}
 	}
 
-//	@Override
-//	public Optional<HerenKapsels> findById(long id) {
-//		try {
-//			String sql = "select idmannenkapsels, naammannenkapsel, prijsmannenkapsel from mannenkapsels where idmannenkapsels = ?";
-//
-//			return Optional.of(template.queryForObject(sql, mannenKapselMapper, id));
-//		} catch (IncorrectResultSizeDataAccessException ex) {
-//			return Optional.empty();
-//		}
-//	}
-//
-//
-//
-//@Override
-//public void update(Snack snack) {
-//	String sql = "update snacks set naam=?, prijs=? where id=?";
-//	if (template.update(sql, snack.getNaam(), snack.getPrijs(), snack.getId()) == 0) {
-//		throw new SnackNietGevondenException();
-//	}
-//}
-
 	private static final String UPDATE_FILM =
-			"update films set gereserveerd=?, voorraad=? where id=? and gereserveerd < voorraad";
-
+			"update films set genreid=genreid, titel=titel, voorraad=?, gereserveerd=?, prijs=prijs where id=? and gereserveerd < voorraad";
 	@Override
 	public void update(Film film) {
-		template.update(UPDATE_FILM, film.getGereserveerd()+1, film.getVoorraad()-1, film.getId());
-//		int nieuwGereserveerd = film.getGereserveerd() +1;
+		int algereserveerd = film.getGereserveerd();
+		System.out.println("al gereserveerd ????????????????????????" + algereserveerd);
+		int nieuwGereserveerd = film.getGereserveerd() +1;
+		System.out.println("nieuw gereserveerd !!!!!!!!!!!!!!!!!!!!!!!!!!!!" + nieuwGereserveerd);
+		int nieuwVoorraad = film.getVoorraad() -1;
+		int filmId = film.getId();
+		System.out.println(filmId);
+		template.update(UPDATE_FILM, nieuwVoorraad, nieuwGereserveerd, filmId);
 //
 //		Map<String, Object> parameters = new HashMap<>();
 //		parameters.put("gereserveerd", film.getGereserveerd() + 1);
 //		parameters.put("id", film.getId());
 
-		if (template.update(UPDATE_FILM,film.getGereserveerd()+1, film.getVoorraad()-1, film.getId()) == 0) {
+		if (template.update(UPDATE_FILM, nieuwVoorraad, nieuwGereserveerd, filmId) == 0) {
 			throw new FilmNietGevondenException();
 		}
 	}

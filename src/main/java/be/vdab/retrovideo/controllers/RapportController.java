@@ -17,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("klant")
@@ -35,33 +37,36 @@ class RapportController {
 		this.filmsService = filmsService;
 	}
 
-	private final static String BEVESTIGEN_VIEW = "bevestigen";
+	private final static String BEVESTIGEN_MAV = "bevestigen";
 
 	@GetMapping("{id}")
     ModelAndView bevestigReservatie(@PathVariable int id) {
-		ModelAndView modelAndView = new ModelAndView(BEVESTIGEN_VIEW, "mandje", mandje.getFilmIds());
+		ModelAndView modelAndView = new ModelAndView(BEVESTIGEN_MAV, "mandje", mandje.getFilmIds());
 		modelAndView.addObject("klant", klantenService.read(id));
 		return modelAndView;
 	}
 
-	private final static String BEVESTIGD_VIEW = "bevestigd";
+	private final static String BEVESTIGD_MAV = "bevestigd";
 
 	@GetMapping("{klantId}/bevestigd")
     ModelAndView bevestigdview(@PathVariable int klantId) {
-		ModelAndView modelAndView = new ModelAndView(BEVESTIGD_VIEW);
+		ModelAndView modelAndView = new ModelAndView(BEVESTIGD_MAV);
+//		filmsService.u
+		mandje.mandjeLeeg();
 		return modelAndView;
 	}
 
-	private final static String REDIRECT_URL_NA_BEVESTIGING = "redirect:/klant/{klantId}/bevestigd";
+	private final static String REDIRECT_NA_BEVESTIGING = "redirect:/klant/{klantId}/bevestigd";
 
 	@PostMapping("{klantId}/bevestigd")
     ModelAndView bevestigd(@PathVariable int klantId, RedirectAttributes redirectAttributes) {
-		ModelAndView modelAndView = new ModelAndView(REDIRECT_URL_NA_BEVESTIGING);
+		ModelAndView modelAndView = new ModelAndView(REDIRECT_NA_BEVESTIGING);
 		String mislukt = "";
 		for (int filmId : mandje.getFilmIds()) {
 			Reservatie reservatie = new Reservatie(klantId, filmId, LocalDateTime.now());
 			Optional<Film> film = filmsService.read(filmId);
 			try {
+				System.out.println("hier moet t gebeuren");
 				reservatiesService.updateReservatiesEnFilms(reservatie, film.get());
 			} catch (FilmNietGevondenException ex) {
 				String filmNaam = film.get().getTitel();
@@ -74,7 +79,7 @@ class RapportController {
 
 	@GetMapping("{klantId}/bevestigd?mislukteFilms")
     ModelAndView misluktview(@PathVariable String mislukt) {
-		ModelAndView modelAndView = new ModelAndView(BEVESTIGD_VIEW);
+		ModelAndView modelAndView = new ModelAndView(BEVESTIGD_MAV);
 		String[] gesplitstefilms = mislukt.split(",");
 		modelAndView.addObject("mislukteFilms", gesplitstefilms);
 		return modelAndView;

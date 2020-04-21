@@ -12,6 +12,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Set;
 
+/**
+ * verwerkt film-gerelateerde verzoeken
+ * @author Dimitri Gevers
+ * @since 20-04-2020
+ * @version 21-04-2020
+ * @exception
+ */
 @Controller
 @RequestMapping("film")
 class FilmController {
@@ -19,21 +26,26 @@ class FilmController {
 	private final FilmsService filmsService;
 	private final Mandje mandje;
 
+	/** maakt een FilmController
+	 * @param filmsService leest films in uit de film repository
+	 * @param mandje sessie die film id's bewaart
+	 */
 	public FilmController(FilmsService filmsService, Mandje mandje) {
 		this.filmsService = filmsService;
 		this.mandje = mandje;
 	}
 
-	private final static String FILM_VIEW = "film";
+	private final static String FILM_MAV = "film";
+
 
 	@GetMapping("{id}")
     ModelAndView toonFilm(@PathVariable int id) {
-		ModelAndView modelAndView = new ModelAndView(FILM_VIEW);
+		ModelAndView modelAndView = new ModelAndView(FILM_MAV);
 		filmsService.read(id).ifPresent(film -> modelAndView.addObject(film));
 		return modelAndView;
 	}
 
-	private static final String REDIRECT_NA_TOEVOEGEN = "redirect:/mandje";
+	private static final String REDIRECT_MANDJE = "redirect:/mandje";
 
 	@PostMapping("{id}")
     ModelAndView voegFilmToeAanMandje(@PathVariable int id, RedirectAttributes redirectAttributes) {
@@ -45,6 +57,6 @@ class FilmController {
 		if (eersteSize == tweedeSize) {
 			redirectAttributes.addAttribute("reedsInMandje", reedsInMandje);
 		}
-		return new ModelAndView(REDIRECT_NA_TOEVOEGEN);
+		return new ModelAndView(REDIRECT_MANDJE);
 	}
 }

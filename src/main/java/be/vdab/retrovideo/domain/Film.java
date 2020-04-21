@@ -2,17 +2,18 @@ package be.vdab.retrovideo.domain;
 
 import org.springframework.format.annotation.NumberFormat;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 public class Film {
-	private int id;
-	private int genreId;
-	private String titel;
+	@Positive private int id;
+	@Positive private int genreId;
+	@NotBlank @NotNull private String titel;
 	private int voorraad;
 	private int gereserveerd;
-	@NumberFormat(pattern = "€ 0.00")
-	private BigDecimal prijs;
-	
+	@NumberFormat(pattern = "€ 0.00") private BigDecimal prijs;
 
 public Film(int id, int genreId, String titel, int voorraad, int gereserveerd, BigDecimal prijs) {
 		this.id = id;
@@ -22,11 +23,6 @@ public Film(int id, int genreId, String titel, int voorraad, int gereserveerd, B
 		this.gereserveerd = gereserveerd;
 		this.prijs = prijs;
 	}
-	
-	
-public Film() {
-	}
-
 
 	public int getId() {
 		return id;

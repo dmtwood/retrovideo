@@ -13,6 +13,8 @@
 
 
 <h1>Genres</h1>
+
+<!--  -->
 <nav class="menu">
         <span th:each="genre:${genres}" th:object="${genre}">
             <a th:href="@{/genres/{id}(id=*{id})}"> <span th:text="${genre.naam}"></span></a>
@@ -20,7 +22,7 @@
 </nav>
 
 <span th:each="genreFilm:${genreFilms}" th:object="${genreFilm}">
-    <a th:href="@{/film/{id}(id=*{getId()})}"> a
+    <a th:href="@{/film/{id}(id=*{getId()})}">
         <img th:src="@{|/images/${{genreFilm.id}}.jpg|}" alt="|${{genreFilm.id}}.jpg}|">
     </a>
 </span>

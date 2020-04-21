@@ -4,7 +4,7 @@
 <body>
 <table>
     <tr>
-        <td><a th:href="@{/}">Genres </a></td>
+        <td><a th:href="@{/} ">Genres </a></td>
     </tr>
 </table>
 
@@ -12,6 +12,8 @@
 
 <span th:if="${mislukteFilms} == null">
     <p>De Reservatie is OK</p>
+    <p> Het mandje is terug leeg voor de volgende bestelling</p>
+
 </span>
 <span th:if="${mislukteFilms}">
     <p>Volgende reservatie(s) zijn mislukt:</p>

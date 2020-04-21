@@ -1,6 +1,7 @@
 package be.vdab.retrovideo.repositories;
 
 import be.vdab.retrovideo.domain.Reservatie;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
@@ -13,10 +14,12 @@ public class JdbcReservatiesRepository implements ReservatiesRepository {
 
 	private final SimpleJdbcInsert insert;
 
-	JdbcReservatiesRepository(DataSource dataSource) {
-		this.insert = new SimpleJdbcInsert(dataSource);
+	JdbcReservatiesRepository(JdbcTemplate template) {
+		this.insert = new SimpleJdbcInsert(template);
 		insert.withTableName("reservaties");
 	}
+
+
 
 	@Override
 	public void create(Reservatie reservatie) {

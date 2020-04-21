@@ -11,8 +11,7 @@
 </table>
 <h1> Mandje </h1>
 
-<span th:if="${filmsInMandje}==null">
-<h2>Mandje is leeg</h2></span>
+<span th:if="${filmsInMandje.isEmpty()}">   <h2>Mandje is leeg</h2>   </span>
 
 <!--            <form th:object="${film}" method="post" th:action="@{|/film/${film.id}|}">-->
 <!--                <input type="submit" th:value="'In mandje'" >-->
@@ -20,23 +19,29 @@
 
  <form th:object="${filmsInMandje}" th:action="@{/mandje/verwijderid}" method="post" th:href="@{MandjeForm}" id="MandjeForm">
      <table id="tabel">
-        <tr>
-            <th>Film</th>
+        <tr style="background-color: goldenrod; height: 20px;">
+            <th>Film<br></th>
             <th>Prijs</th>
-            <th><input type='submit' value='Verwijderen' id='verwijderknop' ></th>
+            <th><input type='submit' value='Verwijderen' id='verwijderknop' ><br><br></th>
         </tr>
          <tr th:each="film:${filmsInMandje}" th:object="${film}">
-             <td th:text="${film.titel}"></td>
+             <td th:text="${film.titel}" style="width: fit-content"></td>
              <td th:text="${film.prijs}"></td>
              <td> <input th:type="checkbox" th:name="verwijderid" th:value="${film.id}"></td>
          </tr>
          <tr>
-             <td th:text="${totalePrijs.waarde}"></td>
+             <td style="text-align: right; font-weight: bold">Totaalprijs:</td>
+            <td th:text="${totalePrijs.waarde}" style="font-weight: bold"></td>
+             <td>  </td>
          </tr>
      </table>
  </form>
 
+<span th:if="${reedsInMandje}">
+    <span th:text="${reedsInMandje}"></span>
+    is reeds aanwezig in het mandje
 
+</span>
 <!--<c:if test='${not empty param.reedsInMandje}'>-->
 <!--    <p>filmnr: ${param.reedsInMandje} is reeds aanwezig in het mandje</p>-->
 <!--</c:if>-->

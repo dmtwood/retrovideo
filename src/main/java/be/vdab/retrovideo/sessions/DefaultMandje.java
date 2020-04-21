@@ -40,4 +40,8 @@ public class DefaultMandje implements Serializable, Mandje {
 		return totaal;
 	}
 
+	@Override
+	public void mandjeLeeg() {
+		filmIds.clear();
+	}
 }
