@@ -14,22 +14,35 @@
 <span th:if="${filmsInMandje}==null">
 <h2>Mandje is leeg</h2></span>
 
-<!--ad id to mandje list HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
- <form th:action="@{/Mandje}" th:href="@{MandjeForm}">
+
+
+
+<!--            <form th:object="${film}" method="post" th:action="@{|/film/${film.id}|}">-->
+
+<!--                <input type="submit" th:value="'In mandje'" >-->
+<!--            </form>-->
+
+ <form th:action="@{/Mandje/verwijderid}" method="post" th:href="@{MandjeForm}" id="MandjeForm">
      <table id="tabel">
         <tr>
             <th>Film</th>
             <th>Prijs</th>
-            <th><input type='submit' value='Verwijderen' id='verwijderknop'></th>
+            <th><input type='submit' value='Verwijderen' id='verwijderknop' ></th>
         </tr>
          <tr th:each="film:${filmsInMandje}" th:object="${film}">
              <td th:text="${film.titel}"></td>
              <td th:text="${film.prijs}"></td>
              <td> <input th:type="checkbox" th:name="verwijderid" th:value="${film.id}"></td>
          </tr>
+         <tr>
+             <td th:text="${totalePrijs.waarde}"></td>
+         </tr>
      </table>
  </form>
 
+<!--<form th:object="${film}" method="post" th:action="@{|/film/${film.id}|}">-->
+<!--    <input type="submit" th:value="'In mandje'" >-->
+<!--</form>-->
 
 
 <!--            </c:forEach>-->

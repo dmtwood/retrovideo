@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Component
 @SessionScope
-class DefaultMandje implements Serializable, Mandje {
+public class DefaultMandje implements Serializable, Mandje {
 
 	private static final long serialVersionUID = 1L;
 	private final Set<Integer> filmIds = new LinkedHashSet<>();

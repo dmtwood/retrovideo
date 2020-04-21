@@ -26,26 +26,10 @@
 
 
 <div th:if="${film.gereserveerd} < ${film.voorraad}">
-    <form th:object="${film}" method="post" th:action="@{/mandje}">
+    <form th:object="${film}" method="post" th:action="@{|/film/${film.id}|}">
         <input type="submit" th:value="'In mandje'" >
     </form>
 </div>
-
-<!--<c:if test='${empty film}'>-->
-<!--    <h1>film niet gevonden</h1>-->
-<!--</c:if>-->
-<!--<span th:errors="*{film}"> - niet gevonden </span>-->
-
-
-<!--    <c:if test='${film.gereserveerd < film.voorraad}'>-->
-<!--        <spring:url value='/film/{id}' var='url'>-->
-<!--            <spring:param name='id' value="${film.id}" />-->
-<!--        </spring:url>-->
-<!--        <form:form action='${url}' modelAttribute='mandjeForm' method='post' id='mandjeform'>-->
-<!--            <input type='submit' value='Mandje' id='toevoegknop'>-->
-<!--        </form:form>-->
-<!--    </c:if>-->
-<!--</c:if>-->
 
 <!--<script>-->
 <!--    document.getElementById('mandjeform').onsubmit = function() {-->
