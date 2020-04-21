@@ -56,16 +56,6 @@ class MandjeController {
 		return modelAndView;
 	}
 
-
-
-
-
-
-
-
-
-
-
 	@GetMapping("?reedsInMandje")
     ModelAndView toonMandjeIgvDubbeleFilm(@PathVariable int reedsInMandje) {
 		List<Film> films = maakFilmsVanFilmsIds(mandje.getFilmIds());
@@ -79,7 +69,7 @@ class MandjeController {
 
 	private final static String REDIRECT_NA_DELETE = "redirect:/mandje";
 
-	@PostMapping(params = "verwijderid")
+	@PostMapping("verwijderid")
     ModelAndView verwijderId(int[] verwijderid) {
 		if (verwijderid != null) {
 			mandje.verwijderFilmId(verwijderid);

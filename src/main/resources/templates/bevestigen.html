@@ -1,10 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head('Bevestigen')"></head>
+
 <body>
+<table>
+    <tr>
+        <td><a th:href="@{/}">Genres </a></td>
+        <td><a th:href="@{/mandje}">Mandje </a></td>
+        <td><a th:href="@{/klant}">Klant </a></td>
+    </tr>
+</table>
+
+	<h1>bevestigen</h1>
+
+	<span th:text="${mandje.size()}"></span>
+	film(s) voor
+	<span th:text="${klant.voornaam}"></span>
+	<span th:text="${klant.familienaam}"></span>
+
+
+	<form:form action="@{/klant/{klant.id}/bevestigd}" modelAttribute='reservatie' method='post'
+		id='bevestigenform'>
+		<input type='submit' value='Bevestigen' id='toevoegknop'>
+	</form:form>
+
+	<script>
+		document.getElementById('bevestigenform').onsubmit = function() {
+			document.getElementById('toevoegknop').disabled = true;
+		};
+	</script>
+
 
 </body>
 </html>

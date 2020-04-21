@@ -14,15 +14,11 @@
 <span th:if="${filmsInMandje}==null">
 <h2>Mandje is leeg</h2></span>
 
-
-
-
 <!--            <form th:object="${film}" method="post" th:action="@{|/film/${film.id}|}">-->
-
 <!--                <input type="submit" th:value="'In mandje'" >-->
 <!--            </form>-->
 
- <form th:action="@{/Mandje/verwijderid}" method="post" th:href="@{MandjeForm}" id="MandjeForm">
+ <form th:object="${filmsInMandje}" th:action="@{/mandje/verwijderid}" method="post" th:href="@{MandjeForm}" id="MandjeForm">
      <table id="tabel">
         <tr>
             <th>Film</th>
@@ -40,19 +36,6 @@
      </table>
  </form>
 
-<!--<form th:object="${film}" method="post" th:action="@{|/film/${film.id}|}">-->
-<!--    <input type="submit" th:value="'In mandje'" >-->
-<!--</form>-->
-
-
-<!--            </c:forEach>-->
-<!--            <tr>-->
-<!--                <td>Totaal:</td>-->
-<!--                <td><spring:eval expression='totalePrijs.waarde' /></td>-->
-<!--            </tr>-->
-<!--        </table>-->
-<!--    </form>-->
-<!--</c:if>-->
 
 <!--<c:if test='${not empty param.reedsInMandje}'>-->
 <!--    <p>filmnr: ${param.reedsInMandje} is reeds aanwezig in het mandje</p>-->

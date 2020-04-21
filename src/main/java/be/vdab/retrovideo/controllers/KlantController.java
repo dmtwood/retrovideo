@@ -29,10 +29,10 @@ class KlantController {
 		return new ModelAndView(KLANT_VIEW).addObject(new DeelNaamForm());
 	}
 	
-	@GetMapping(params = "deelNaam")
+	@GetMapping("deelNaam")
     ModelAndView zoekOpDeelNaam(@Valid DeelNaamForm deelNaamForm, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView(KLANT_VIEW);
-		if(bindingResult.hasErrors()) {
+		if(bindingResult.hasErrors()) { // errors ipv bindingresults
 			return modelAndView;
 		}
 		List<Klant> klanten = klantenService.findByFamilienaamBevat(deelNaamForm.getDeelNaam());

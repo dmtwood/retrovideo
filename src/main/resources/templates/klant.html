@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>klant</title>
-</head>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head('Klanten')"></head>
+
 <body>
-klant
+<table>
+    <tr>
+        <td><a th:href="@{/}">Genres </a></td>
+        <td><a th:href="@{/mandje}">Mandje </a></td>
+        <td><a th:href="@{/klant}">Klant </a></td>
+    </tr>
+</table>
+<h1> Klanten </h1>
+<form th:object="${deelNaamForm}" th:action="@{/klant/deelNaam}" method="get">
+    <input th:field="*{deelNaam}" autofocus='autofocus' required='required' />
+    <input type='submit' value='Zoeken' id='zoekknop'>
+</form>
+
+    <table>
+            <th>Naam</th>
+            <th>Straat - Huisnummer</th>
+            <th>Postcode</th>
+            <th>Gemeente</th>
+
+        <tr th:each="klant:${klanten}" th:object="${klant}">
+            <td>
+                <a th:href=" @{${klant.id}} ">
+                   <span th:text="${klant.familienaam}"> </span>
+                </a>
+            </td>
+            <td th:text="${klant.straatNummer}">    </td>
+            <td th:text="${klant.postcode}">        </td>
+            <td th:text="${klant.gemeente}">        </td>
+        </tr>
+    </table>
+
 </body>
 </html>
