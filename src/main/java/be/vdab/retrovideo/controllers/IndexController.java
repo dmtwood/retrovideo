@@ -41,7 +41,7 @@ class IndexController {
 	}
 
 	@GetMapping("genres/{genreId}")
-    ModelAndView findFilmsByGenre(@PathVariable int genreId) {
+    ModelAndView findFilmsByGenre(@PathVariable long genreId) {
 		return new ModelAndView(
 				WELKOM_VIEW,
 				GENRES,

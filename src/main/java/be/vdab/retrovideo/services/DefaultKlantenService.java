@@ -24,7 +24,7 @@ class DefaultKlantenService implements KlantenService {
 	}
 
 	@Override
-	public Klant read(int id) {
+	public Klant read(long id) {
 		return repository.read(id);
 	}
 	

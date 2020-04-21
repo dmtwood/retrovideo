@@ -16,21 +16,21 @@ import java.util.Set;
 public class DefaultMandje implements Serializable, Mandje {
 
 	private static final long serialVersionUID = 1L;
-	private final Set<Integer> filmIds = new LinkedHashSet<>();
+	private final Set<Long> filmIds = new LinkedHashSet<>();
 
 	@Override
-	public void addFilmId(int filmId) {
+	public void addFilmId(long filmId) {
 		filmIds.add(filmId);
 	}
 
 	@Override
-	public Set<Integer> getFilmIds() {
+	public Set<Long> getFilmIds() {
 		return filmIds;
 	}
 
 	@Override
-	public void verwijderFilmId(int[] ids) {
-		Arrays.stream(ids).forEach(id -> filmIds.remove(Integer.valueOf(id)));
+	public void verwijderFilmId(long[] ids) {
+		Arrays.stream(ids).forEach(id -> filmIds.remove(id));
 	}
 
 	@Override

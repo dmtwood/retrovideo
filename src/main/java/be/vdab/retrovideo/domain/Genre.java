@@ -1,17 +1,17 @@
 package be.vdab.retrovideo.domain;
 
 public class Genre {
-	private int id;
+	private long id;
 	private String naam;
 	
-	public Genre(int id, String naam) {
+	public Genre(long id, String naam) {
 		this.id = id;
 		this.naam = naam;
 	}
 	
 	public Genre() {
 	}
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	public String getNaam() {

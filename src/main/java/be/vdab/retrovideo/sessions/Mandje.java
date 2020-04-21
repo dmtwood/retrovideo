@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Set;
 
 public interface Mandje {
-  void addFilmId(int filmId);  
-  Set<Integer> getFilmIds(); 
-  void verwijderFilmId(int[] ids);
+  void addFilmId(long filmId);
+  Set<Long> getFilmIds();
+  void verwijderFilmId(long[] ids);
   void mandjeLeeg();
   TotalePrijs berekenTotalePrijs(List<BigDecimal> filmPrijzen);
 }

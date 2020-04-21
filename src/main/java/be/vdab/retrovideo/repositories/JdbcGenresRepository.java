@@ -16,7 +16,7 @@ public class JdbcGenresRepository implements GenresRepository {
 		this.template = template;   }
 	
 	private final RowMapper<Genre> GenreRowMapper = (resultSet, rowNum) ->
-			new Genre(resultSet.getInt("id"), resultSet.getString("naam"));
+			new Genre(resultSet.getLong("id"), resultSet.getString("naam"));
 	
 	private static final String SELECT_UNIEKE_GENRES =   "select distinct id, naam from genres order by id"; 
 

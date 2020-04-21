@@ -39,7 +39,7 @@ class FilmController {
 
 
 	@GetMapping("{id}")
-    ModelAndView toonFilm(@PathVariable int id) {
+    ModelAndView toonFilm(@PathVariable long id) {
 		ModelAndView modelAndView = new ModelAndView(FILM_MAV);
 		filmsService.read(id).ifPresent(film -> modelAndView.addObject(film));
 		return modelAndView;
@@ -48,12 +48,12 @@ class FilmController {
 	private static final String REDIRECT_MANDJE = "redirect:/mandje";
 
 	@PostMapping("{id}")
-    ModelAndView voegFilmToeAanMandje(@PathVariable int id, RedirectAttributes redirectAttributes) {
-		Set<Integer> filmIds = mandje.getFilmIds();
-		int eersteSize = filmIds.size();
+    ModelAndView voegFilmToeAanMandje(@PathVariable long id, RedirectAttributes redirectAttributes) {
+		Set<Long> filmIds = mandje.getFilmIds();
+		long eersteSize = filmIds.size();
 		filmIds.add(id);
-		int tweedeSize = filmIds.size();
-		int reedsInMandje = id;
+		long tweedeSize = filmIds.size();
+		long reedsInMandje = id;
 		if (eersteSize == tweedeSize) {
 			redirectAttributes.addAttribute("reedsInMandje", reedsInMandje);
 		}

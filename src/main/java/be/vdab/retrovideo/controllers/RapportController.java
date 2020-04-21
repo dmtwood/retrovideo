@@ -40,7 +40,7 @@ class RapportController {
 	private final static String BEVESTIGEN_MAV = "bevestigen";
 
 	@GetMapping("{id}")
-    ModelAndView bevestigReservatie(@PathVariable int id) {
+    ModelAndView bevestigReservatie(@PathVariable long id) {
 		ModelAndView modelAndView = new ModelAndView(BEVESTIGEN_MAV, "mandje", mandje.getFilmIds());
 		modelAndView.addObject("klant", klantenService.read(id));
 		return modelAndView;
@@ -49,7 +49,7 @@ class RapportController {
 	private final static String BEVESTIGD_MAV = "bevestigd";
 
 	@GetMapping("{klantId}/bevestigd")
-    ModelAndView bevestigdview(@PathVariable int klantId) {
+    ModelAndView bevestigdview(@PathVariable long klantId) {
 		ModelAndView modelAndView = new ModelAndView(BEVESTIGD_MAV);
 //		filmsService.u
 		mandje.mandjeLeeg();
@@ -59,10 +59,10 @@ class RapportController {
 	private final static String REDIRECT_NA_BEVESTIGING = "redirect:/klant/{klantId}/bevestigd";
 
 	@PostMapping("{klantId}/bevestigd")
-    ModelAndView bevestigd(@PathVariable int klantId, RedirectAttributes redirectAttributes) {
+    ModelAndView bevestigd(@PathVariable long klantId, RedirectAttributes redirectAttributes) {
 		ModelAndView modelAndView = new ModelAndView(REDIRECT_NA_BEVESTIGING);
 		String mislukt = "";
-		for (int filmId : mandje.getFilmIds()) {
+		for (long filmId : mandje.getFilmIds()) {
 			Reservatie reservatie = new Reservatie(klantId, filmId, LocalDateTime.now());
 			Optional<Film> film = filmsService.read(filmId);
 			try {

@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface KlantenService {
 	List<Klant> findByFamilienaamBevat(String deelNaam);
-	Klant read(int id);
+	Klant read(long id);
 }

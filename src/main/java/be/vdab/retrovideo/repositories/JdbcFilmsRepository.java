@@ -31,7 +31,7 @@ public class JdbcFilmsRepository implements FilmsRepository {
 					"where genreid=? order by titel";
 
 	@Override
-	public List<Film> findByGenre(int genreId) {
+	public List<Film> findByGenre(long genreId) {
 
 		return template.query(SELECT_BY_ID,  filmsRowMapper, genreId);
 
@@ -40,7 +40,7 @@ public class JdbcFilmsRepository implements FilmsRepository {
 	private static final String READ =
 			"select id, genreid, titel, voorraad, gereserveerd, prijs from films where id= ?";
 	@Override
-	public Optional<Film> read(int id) {
+	public Optional<Film> read(long id) {
 		try {
 			return Optional.of(template.queryForObject(READ,  filmsRowMapper, id));
 		} catch (IncorrectResultSizeDataAccessException ex) {
@@ -52,12 +52,12 @@ public class JdbcFilmsRepository implements FilmsRepository {
 			"update films set genreid=genreid, titel=titel, voorraad=?, gereserveerd=?, prijs=prijs where id=? and gereserveerd < voorraad";
 	@Override
 	public void update(Film film) {
-		int algereserveerd = film.getGereserveerd();
+		long algereserveerd = film.getGereserveerd();
 		System.out.println("al gereserveerd ????????????????????????" + algereserveerd);
-		int nieuwGereserveerd = film.getGereserveerd() +1;
+		long nieuwGereserveerd = film.getGereserveerd() +1;
 		System.out.println("nieuw gereserveerd !!!!!!!!!!!!!!!!!!!!!!!!!!!!" + nieuwGereserveerd);
-		int nieuwVoorraad = film.getVoorraad() -1;
-		int filmId = film.getId();
+		long nieuwVoorraad = film.getVoorraad() -1;
+		long filmId = film.getId();
 		System.out.println(filmId);
 		template.update(UPDATE_FILM, nieuwVoorraad, nieuwGereserveerd, filmId);
 //

@@ -24,17 +24,18 @@ public class JdbcReservatiesRepositoryTest extends AbstractTransactionalJUnit4Sp
 
 	private JdbcReservatiesRepository repository;
 
+
 	@Test
 	public void create() {
-		int aantalEntries = super.countRowsInTable(RESERVATIES);
+		long aantalEntries = super.countRowsInTable(RESERVATIES);
 		repository.create(
 				new Reservatie(
-						10,
-						20,
+						10L,
+						20L,
 						LocalDateTime.now()
 				)
 		);
-		assertThat(aantalEntries+1).isEqualTo(super.countRowsInTable(RESERVATIES));
+		assertThat(aantalEntries+1L).isEqualTo(super.countRowsInTable(RESERVATIES));
 
 	}
 

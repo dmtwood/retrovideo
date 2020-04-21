@@ -21,12 +21,12 @@ class DefaultFilmsService implements FilmsService {
 	}
 
 	@Override
-	public List<Film> findByGenre(int genreId) {
+	public List<Film> findByGenre(long genreId) {
 		return filmsRepository.findByGenre(genreId);
 	}
 
 	@Override
-	public Optional<Film> read(int id) {
+	public Optional<Film> read(long id) {
 		return filmsRepository.read(id);
 	}
 

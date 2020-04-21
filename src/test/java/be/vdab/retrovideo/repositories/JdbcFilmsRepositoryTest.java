@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @JdbcTest
 @Import(JdbcFilmsRepository.class)
-@Sql("insertFilm.sql")
+//@Sql("/insertFilm.sql")
 
 public class JdbcFilmsRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
 
@@ -34,8 +34,8 @@ public class JdbcFilmsRepositoryTest extends AbstractTransactionalJUnit4SpringCo
 		assertEquals(super.countRowsInTableWhere(FILMS, "genreid = 1"), films.size());
 	}
 
-	private int idVanTestFilm(){
-		return super.jdbcTemplate.queryForObject("select id from films where titel='test'", int.class);
+	private long idVanTestFilm(){
+		return super.jdbcTemplate.queryForObject("select id from films where titel='test'", long.class);
 	}
 
 	@Test
@@ -50,7 +50,7 @@ public class JdbcFilmsRepositoryTest extends AbstractTransactionalJUnit4SpringCo
 
 	@Test
 	public void update() {
-		int id = idVanTestFilm();
+		long id = idVanTestFilm();
 		Film film = new Film(id, 1, "test", 10, 6, BigDecimal.TEN);
 		repository.update(film);
 		assertThat(repository.read(idVanTestFilm()).get().getGereserveerd()).isEqualTo(7);
@@ -60,7 +60,7 @@ public class JdbcFilmsRepositoryTest extends AbstractTransactionalJUnit4SpringCo
 
 	@Test(expected = FilmNietGevondenException.class)
 	public void updateOnbestaandeFilm() {
-		int id = idVanTestFilm();
+		long id = idVanTestFilm();
 		Film film = new Film(id - 1, 2, "test", 10, 6, BigDecimal.TEN);
 		repository.update(film);
 	}

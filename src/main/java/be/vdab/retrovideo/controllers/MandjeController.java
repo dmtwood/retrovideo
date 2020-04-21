@@ -27,17 +27,17 @@ class MandjeController {
 		this.filmsService = filmsService;
 	}
 
-	private List<Film> maakFilmsVanFilmsIds(Set<Integer> filmIds) {
+	private List<Film> maakFilmsVanFilmsIds(Set<Long> filmIds) {
 		List<Film> films = new ArrayList<>(filmIds.size());
-		for (int id : filmIds) {
+		for (long id : filmIds) {
 			filmsService.read(id).ifPresent(film -> films.add(film));
 		}
 		return films;
 	}
 
-	private List<BigDecimal> maakPrijzenVanFilmsIds(Set<Integer> filmIds) {
+	private List<BigDecimal> maakPrijzenVanFilmsIds(Set<Long> filmIds) {
 		List<BigDecimal> prijzen = new ArrayList<>(filmIds.size());
-		for (int id : filmIds) {
+		for (long id : filmIds) {
 			filmsService.read(id).ifPresent(film -> prijzen.add(film.getPrijs()));
 		}
 		return prijzen;
@@ -57,7 +57,7 @@ class MandjeController {
 	}
 
 	@GetMapping("?reedsInMandje")
-    ModelAndView toonMandjeIgvDubbeleFilm(@PathVariable int reedsInMandje) {
+    ModelAndView toonMandjeIgvDubbeleFilm(@PathVariable long reedsInMandje) {
 		List<Film> films = maakFilmsVanFilmsIds(mandje.getFilmIds());
 		List<BigDecimal> prijzen = maakPrijzenVanFilmsIds(mandje.getFilmIds());
 		ModelAndView modelAndView = new ModelAndView(MANDJE_VIEW);
@@ -70,7 +70,7 @@ class MandjeController {
 	private final static String REDIRECT_NA_DELETE = "redirect:/mandje";
 
 	@PostMapping("verwijderid")
-    ModelAndView verwijderId(int[] verwijderid) {
+    ModelAndView verwijderId(long[] verwijderid) {
 		if (verwijderid != null) {
 			mandje.verwijderFilmId(verwijderid);
 		}
