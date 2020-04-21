@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @JdbcTest
 @Import(JdbcFilmsRepository.class)
-//@Sql("/insertFilm.sql")
+@Sql("/insertFilm.sql")
 
 public class JdbcFilmsRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
 
@@ -45,7 +45,7 @@ public class JdbcFilmsRepositoryTest extends AbstractTransactionalJUnit4SpringCo
 
 	@Test
 	public void readOnbestaandeFilm() {
-		assertFalse(repository.read(-1).isPresent());
+		assertThat(repository.read(-1)).isNotPresent();
 	}
 
 	@Test

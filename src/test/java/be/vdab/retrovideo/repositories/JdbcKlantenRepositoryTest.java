@@ -42,9 +42,9 @@ public class JdbcKlantenRepositoryTest extends AbstractTransactionalJUnit4Spring
 		assertEquals(aantalKlanten, klanten.size());
 	}
 
-	private int idVanTestKlant() {
+	private long idVanTestKlant() {
 		return super.jdbcTemplate.queryForObject("select id from klanten where familienaam='testfamilienaam'",
-				Integer.class);
+				Long.class);
 	}
 
 	@Test
