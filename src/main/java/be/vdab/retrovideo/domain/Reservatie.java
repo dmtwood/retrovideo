@@ -1,14 +1,12 @@
 package be.vdab.retrovideo.domain;
 
+import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
 public class Reservatie {
-	private long klantId;
-	private long filmId;
+	@Positive private long klantId;
+	@Positive private long filmId;
 	private LocalDateTime reservatie = LocalDateTime.now();
-	
-	Reservatie() {
-	}
 
 	public Reservatie(long klantId, long filmId, LocalDateTime reservatie) {
 		this.klantId = klantId;

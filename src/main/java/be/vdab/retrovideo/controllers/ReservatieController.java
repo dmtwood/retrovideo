@@ -20,46 +20,49 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.IntStream;
 
+/** Controller Class handling index klant requests (bis)
+ * depends on  mandje, klantenService, filmService and GenreService
+ * creates ReservatieController-Bean
+ */
 @Controller
-@RequestMapping("klant") // dubbel met klant??
-class RapportController {
+@RequestMapping("klant")
+class ReservatieController {
 	private final Mandje mandje;
 	private final KlantenService klantenService;
 	private final ReservatiesService reservatiesService;
 	private final FilmsService filmsService;
 
-	RapportController(Mandje mandje, KlantenService klantenService, ReservatiesService reservatiesService,
-                      FilmsService filmsService) {
+	ReservatieController(Mandje mandje, KlantenService klantenService, ReservatiesService reservatiesService, FilmsService filmsService) {
 		this.mandje = mandje;
 		this.klantenService = klantenService;
 		this.reservatiesService = reservatiesService;
 		this.filmsService = filmsService;
 	}
 
-	private final static String BEVESTIGEN_MAV = "bevestigen";
-
 	@GetMapping("{id}")
     ModelAndView bevestigReservatie(@PathVariable long id) {
-		ModelAndView modelAndView = new ModelAndView(BEVESTIGEN_MAV, "mandje", mandje.getFilmIds());
-		modelAndView.addObject("klant", klantenService.read(id));
+		ModelAndView modelAndView = new ModelAndView(
+				"bevestigen",
+				"mandje",
+				mandje.getFilmIds()
+		);
+		modelAndView.addObject(
+				"klant",
+				klantenService.read(id)
+		);
 		return modelAndView;
 	}
 
-	private final static String BEVESTIGD_MAV = "bevestigd";
-
 	@GetMapping("{klantId}/bevestigd")
     ModelAndView bevestigdview(@PathVariable long klantId) {
-		ModelAndView modelAndView = new ModelAndView(BEVESTIGD_MAV);
-//		filmsService.u
+		ModelAndView modelAndView = new ModelAndView("bevestigd");
 		mandje.mandjeLeeg();
 		return modelAndView;
 	}
 
-	private final static String REDIRECT_NA_BEVESTIGING = "redirect:/klant/{klantId}/bevestigd";
-
 	@PostMapping("{klantId}/bevestigd")
     ModelAndView bevestigd(@PathVariable long klantId, RedirectAttributes redirectAttributes) {
-		ModelAndView modelAndView = new ModelAndView(REDIRECT_NA_BEVESTIGING);
+		ModelAndView modelAndView = new ModelAndView("redirect:/klant/{klantId}/bevestigd");
 		String mislukt = "";
 		for (long filmId : mandje.getFilmIds()) {
 			Reservatie reservatie = new Reservatie(klantId, filmId, LocalDateTime.now());
@@ -78,9 +81,13 @@ class RapportController {
 
 	@GetMapping("{klantId}/bevestigd?mislukteFilms")
     ModelAndView misluktview(@PathVariable String mislukt) {
-		ModelAndView modelAndView = new ModelAndView(BEVESTIGD_MAV);
+		ModelAndView modelAndView = new ModelAndView(
+				"bevestigd"
+		);
 		String[] gesplitstefilms = mislukt.split(",");
-		modelAndView.addObject("mislukteFilms", gesplitstefilms);
+		modelAndView.addObject(
+				"mislukteFilms", gesplitstefilms
+		);
 		return modelAndView;
 	}
 }

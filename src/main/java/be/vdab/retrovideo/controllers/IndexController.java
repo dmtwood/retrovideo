@@ -10,13 +10,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/")
-/** toon gevraagde film op filmpagina
- * @param id Path variabele die id van gezochte film injecteert in de filmsService
- * @return voegt de film met gezochte id toe aan de filmpagina
+/** Controller Class handling index and genres/id requests
+ * depends on filmService and GenreService
+ * creates IndexController-Bean
  * @Date 21.04.2020
  */
 class IndexController {
-
 	private final GenresService genresService;
 	private final FilmsService filmsService;
 
@@ -25,9 +24,8 @@ class IndexController {
 		this.filmsService = filmsService;
 	}
 
-	private final static String WELKOM_VIEW = "index";
-	private final static String GENRES = "genres";
-
+	private final static String INDEX_MAV = "index";
+	private final static String GENRES_OBJ = "genres";
 
 	/** create a ModelAndView for index.html and add all unique and genre-objects
 	 * @return index with genres
@@ -35,16 +33,22 @@ class IndexController {
 	@GetMapping
     ModelAndView index() {
 		return new ModelAndView(
-				WELKOM_VIEW,
-				GENRES,
+				INDEX_MAV,
+				GENRES_OBJ,
 				genresService.findUniekeGenres());
 	}
 
+
+	/**
+	 * find all films from a genre
+	 * @param genreId injected from index.html
+	 * @return genreFilms for index.html
+	 */
 	@GetMapping("genres/{genreId}")
     ModelAndView findFilmsByGenre(@PathVariable long genreId) {
 		return new ModelAndView(
-				WELKOM_VIEW,
-				GENRES,
+				INDEX_MAV,
+				GENRES_OBJ,
 				genresService.findUniekeGenres()
 		).addObject(
 				"genreFilms",

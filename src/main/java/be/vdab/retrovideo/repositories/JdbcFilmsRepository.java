@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 /**
- * repository to CRUD the table films on retrovideo-JDBC
+ * repository to read, search and update the table films on retrovideo-JDBC
  * uses RowMapper to create Film-objects from DB-records
  * creates FilmRepository-bean to inject in FilmService
  */
@@ -49,21 +49,7 @@ public class JdbcFilmsRepository implements FilmsRepository {
     @Override
     public void update(Film film) {
         final String UPDATE_FILM = "update films set voorraad=?, gereserveerd=? where id=? and 0 < voorraad";
-        long algereserveerd = film.getGereserveerd();
-        System.out.println("al gereserveerd ????????????????????????" + algereserveerd);
-        long nieuwGereserveerd = film.getGereserveerd() + 1;
-        System.out.println("nieuw gereserveerd !!!!!!!!!!!!!!!!!!!!!!!!!!!!" + nieuwGereserveerd);
-        long nieuwVoorraad = film.getVoorraad() - 1;
-        long filmId = film.getId();
-        System.out.println(filmId);
-
-//        template.update(UPDATE_FILM, nieuwVoorraad, nieuwGereserveerd, filmId);
-//
-//		Map<String, Object> parameters = new HashMap<>();
-//		parameters.put("gereserveerd", film.getGereserveerd() + 1);
-//		parameters.put("id", film.getId());
-
-        if (template.update(UPDATE_FILM, nieuwVoorraad, nieuwGereserveerd, filmId) == 0) {
+        if (template.update(UPDATE_FILM, film.getVoorraad() - 1, film.getGereserveerd() + 1, film.getId()) == 0) {
             throw new FilmNietGevondenException();
         }
     }

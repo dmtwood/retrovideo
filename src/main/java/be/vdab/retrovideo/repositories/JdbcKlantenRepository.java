@@ -13,8 +13,9 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * repository to CRUD klanten table on retrovideo DB
+ * repository to read and search klanten table on retrovideo DB
  * uses RowMapper to convert a db-record to a Klant object
+ * creates KlantenRepository-bean to inject in KlantenService
  */
 @Repository
 public class JdbcKlantenRepository implements KlantenRepository {

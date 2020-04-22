@@ -13,11 +13,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Set;
 
 /**
- * verwerkt film-gerelateerde verzoeken
+ * Controller Class handling Film Request
+ * depends on FilmService and Mandje
+ * creates FilmController-Bean
  * @author Dimitri Gevers
  * @since 20-04-2020
- * @version 21-04-2020
- * @exception
+ * @version 23-04-2020
  */
 @Controller
 @RequestMapping("film")
@@ -38,6 +39,11 @@ class FilmController {
 	private final static String FILM_MAV = "film";
 
 
+	/**
+	 * show Film with an id
+	 * @param id Path Variable holding value from index.html
+	 * @return Film object to film.html
+	 */
 	@GetMapping("{id}")
     ModelAndView toonFilm(@PathVariable long id) {
 		ModelAndView modelAndView = new ModelAndView(FILM_MAV);
@@ -46,7 +52,12 @@ class FilmController {
 	}
 
 	private static final String REDIRECT_MANDJE = "redirect:/mandje";
-
+	/**
+	 * add Film to Mandje
+	 * @param id Path Variable holding value from index.html
+	 * @param redirectAttributes handle multiple Film in Mandje,
+	 * @return
+	 */
 	@PostMapping("{id}")
     ModelAndView voegFilmToeAanMandje(@PathVariable long id, RedirectAttributes redirectAttributes) {
 		Set<Long> filmIds = mandje.getFilmIds();

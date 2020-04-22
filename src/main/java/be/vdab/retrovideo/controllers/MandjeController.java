@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/** Controller Class handling mandje requests
+ * depends on filmService and FilmService
+ * creates MandjeController-Bean
+ */
 @Controller
 @RequestMapping("/mandje")
 class MandjeController {

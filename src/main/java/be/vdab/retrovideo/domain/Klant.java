@@ -1,13 +1,16 @@
 package be.vdab.retrovideo.domain;
 
-public class Klant {
-private long id;
-String familienaam;
-private String voornaam;
-private String straatNummer;
-private String postcode;
-private String gemeente;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
+public class Klant {
+@Positive private long id;
+@NotNull @NotBlank String familienaam;
+@NotNull @NotBlank private String voornaam;
+@NotNull @NotBlank private String straatNummer;
+@NotNull @NotBlank private String postcode;
+@NotNull @NotBlank private String gemeente;
 
 public Klant(long id, String familienaam, String voornaam, String straatNummer, String postcode, String gemeente) {
 	this.id = id;

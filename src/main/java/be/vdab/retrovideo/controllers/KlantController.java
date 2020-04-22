@@ -13,6 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * Controller Class handling klant requests
+ *  depends on klantenService
+ *  creates KlantenController-Bean
+ */
 @Controller
 @RequestMapping("/klant")
 class KlantController {

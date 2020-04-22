@@ -11,8 +11,8 @@ public class Film {
 	@Positive private long id;
 	@Positive private long genreId;
 	@NotBlank @NotNull private String titel;
-	private long voorraad;
-	private long gereserveerd;
+	@Positive private long voorraad;
+	@Positive private long gereserveerd;
 	@NumberFormat(pattern = "€ 0.00") private BigDecimal prijs;
 
 public Film(long id, long genreId, String titel, long voorraad, long gereserveerd, BigDecimal prijs) {

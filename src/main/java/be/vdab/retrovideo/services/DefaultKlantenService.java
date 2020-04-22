@@ -9,6 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service Class to read, search and update the table Films in DB
+ * depends on the FilmRepository bean
+ */
+
 @Service
 @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 class DefaultKlantenService implements KlantenService {

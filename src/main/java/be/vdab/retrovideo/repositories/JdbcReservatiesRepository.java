@@ -9,6 +9,11 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * repository to create entries in the table reservaties on retrovideo-JDBC
+ * by using SimpleJdbcInsert
+ * creates ReservatieRepository-bean to inject in ReservatiesService
+ */
 @Repository
 public class JdbcReservatiesRepository implements ReservatiesRepository {
 
@@ -18,7 +23,6 @@ public class JdbcReservatiesRepository implements ReservatiesRepository {
 		this.insert = new SimpleJdbcInsert(template);
 		insert.withTableName("reservaties");
 	}
-
 
 
 	@Override

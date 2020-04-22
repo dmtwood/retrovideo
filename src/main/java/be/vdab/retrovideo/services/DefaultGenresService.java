@@ -8,6 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Service Class to search the table genres in DB
+ * depends on the GenreRepository bean
+ * generates GenreServiceBean for IndexController (handling genres as root of process)
+ */
 @Service
 @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 class DefaultGenresService implements GenresService {
