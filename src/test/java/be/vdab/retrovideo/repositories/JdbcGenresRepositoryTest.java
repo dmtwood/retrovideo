@@ -1,7 +1,7 @@
 package be.vdab.retrovideo.repositories.J;
 import be.vdab.retrovideo.domain.Genre;
 import be.vdab.retrovideo.repositories.JdbcGenresRepository;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;

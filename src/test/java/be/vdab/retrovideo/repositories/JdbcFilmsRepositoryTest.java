@@ -2,15 +2,17 @@ package be.vdab.retrovideo.repositories;
 
 import be.vdab.retrovideo.domain.Film;
 import be.vdab.retrovideo.exceptions.FilmNietGevondenException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -45,7 +47,7 @@ public class JdbcFilmsRepositoryTest extends AbstractTransactionalJUnit4SpringCo
 
 	@Test
 	public void readOnbestaandeFilm() {
-		assertThat(repository.read(-1)).isNull();
+		assertThat(repository.read(-1)).isNotPresent();
 	}
 
 	@Test
@@ -59,7 +61,7 @@ public class JdbcFilmsRepositoryTest extends AbstractTransactionalJUnit4SpringCo
 
 
 
-	@Test(expected = FilmNietGevondenException.class)
+	@Test
 	public void updateOnbestaandeFilm() {
 		long id = idVanTestFilm();
 		Film film = new Film(id - 1, 2, "test", 10, 6, BigDecimal.TEN);

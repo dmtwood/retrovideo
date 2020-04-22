@@ -1,6 +1,6 @@
+<!DOCTYPE html>
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments::head('Bevestigen')"></head>
-
 <body>
 <table>
     <tr>
@@ -10,28 +10,31 @@
     </tr>
 </table>
 
-	<h1>bevestigen</h1>
+<h1>bevestigen</h1>
 
-	<span th:text="${mandje.size()}"></span>
-	film(s) voor
-	<span th:text="${klant.voornaam}"></span>
-	<span th:text="${klant.familienaam}"></span>
+<span th:text="${mandje.size()}"></span>
+film(s) voor
+<span th:object=${klant} th:text="|${klant.voornaam} ${klant.familienaam}"|></span>
 
 
-	<form
-	th:object="${klant}"
-	    th:action="@{|${klant.id}/bevestigd|}"
-	    modelAttribute='reservatie'
-	    method='post'
-		id='bevestigenform'>
-		<input type='submit' value='Bevestigen' id='toevoegknop'>
-	</form>
+<form
+        th:object="${klant}"
+        th:action="@{|${klant.id}/bevestigd|}"
+        modelAttribute='reservatie'
+        method='post'
+        id='bevestigenform'>
+    <input type='submit' value='Bevestigen' id='toevoegknop'>
+</form>
 
-	<script>
-		document.getElementById('bevestigenform').onsubmit = function() {
-			document.getElementById('toevoegknop').disabled = true;
-		};
-	</script>
+
+
+
+
+<script>
+    document.getElementById('bevestigenform').onsubmit = function() {
+        document.getElementById('toevoegknop').disabled = true;
+    };
+</script>
 
 
 </body>

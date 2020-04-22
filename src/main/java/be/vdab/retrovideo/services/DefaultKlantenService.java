@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
@@ -24,7 +25,7 @@ class DefaultKlantenService implements KlantenService {
 	}
 
 	@Override
-	public Klant read(long id) {
+	public Optional<Klant> read(long id) {
 		return repository.read(id);
 	}
 	

@@ -1,19 +1,12 @@
 package be.vdab.retrovideo.repositories;
 
 import be.vdab.retrovideo.domain.Klant;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-import org.springframework.test.context.junit4.SpringRunner;
-
 import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -25,6 +18,10 @@ import static org.junit.Assert.assertTrue;
 public class JdbcKlantenRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 	private JdbcKlantenRepository repository;
+
+	public JdbcKlantenRepositoryTest(JdbcKlantenRepository repository) {
+		this.repository = repository;
+	}
 
 	@Test
 	public void findByFamilienaamBevat() {
@@ -41,13 +38,18 @@ public class JdbcKlantenRepositoryTest extends AbstractTransactionalJUnit4Spring
 	}
 
 	 long idVanTestKlant() {
-		return super.jdbcTemplate.queryForObject("select id from klanten where familienaam='testfamilienaam'",
-				Long.class);
+		return super.jdbcTemplate.queryForObject("select id from klanten where familienaam='testfamilienaam'", Long.class);
 	}
 
 	@Test
 	public void read() {
-		assertThat(repository.read(idVanTestKlant()).getFamilienaam().equalsIgnoreCase("testfamilienaam"));
+		long id = idVanTestKlant();
+		assertThat(repository.read(idVanTestKlant()).get().getFamilienaam()).isEqualTo("testfamilienaam");
+	}
+
+	@Test
+	public void findByOnbestaandeIdVindtGeenKlant() {
+		assertThat(repository.read(-1)).isEmpty();
 	}
 
 }
