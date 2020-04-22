@@ -48,7 +48,7 @@ public class JdbcFilmsRepository implements FilmsRepository {
 
     @Override
     public void update(Film film) {
-        final String UPDATE_FILM = "update films set voorraad=?, gereserveerd=? where id=? and gereserveerd < voorraad";
+        final String UPDATE_FILM = "update films set voorraad=?, gereserveerd=? where id=? and 0 < voorraad";
         long algereserveerd = film.getGereserveerd();
         System.out.println("al gereserveerd ????????????????????????" + algereserveerd);
         long nieuwGereserveerd = film.getGereserveerd() + 1;

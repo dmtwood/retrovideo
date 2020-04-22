@@ -21,9 +21,8 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 @Controller
-@RequestMapping("klant")
+@RequestMapping("klant") // dubbel met klant??
 class RapportController {
-
 	private final Mandje mandje;
 	private final KlantenService klantenService;
 	private final ReservatiesService reservatiesService;

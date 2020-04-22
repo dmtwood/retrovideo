@@ -51,6 +51,7 @@ class FilmController {
     ModelAndView voegFilmToeAanMandje(@PathVariable long id, RedirectAttributes redirectAttributes) {
 		Set<Long> filmIds = mandje.getFilmIds();
 		long eersteSize = filmIds.size();
+		// add the film to mandje.ids
 		filmIds.add(id);
 		long tweedeSize = filmIds.size();
 		long reedsInMandje = id;

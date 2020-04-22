@@ -1,6 +1,5 @@
-<!DOCTYPE html>
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments::head(title=${film.titel})"></head>
+<head th:replace="fragments::head(title='RETRO VIDEO - genres')"></head>
 
 <body>
 <p>
@@ -21,7 +20,7 @@
     <dt th:text="${film.gereserveerd}" style="font-weight: bold"></dt>
     <br>
     <dt>Beschikbaar</dt>
-    <dt th:text="${film.gereserveerd < film.voorraad ? 'ja' : 'nee'}" style="font-weight: bold"></dt>
+    <dt th:text="${film.voorraad > 0  ? 'ja' : 'nee'}" style="font-weight: bold"></dt>
     <br>
 </dl>
 

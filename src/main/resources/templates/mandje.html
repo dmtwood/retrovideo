@@ -19,16 +19,19 @@
 
  <form th:object="${filmsInMandje}" th:action="@{/mandje/verwijderid}" method="post" th:href="@{MandjeForm}" id="MandjeForm">
      <table id="tabel">
+
         <tr style="background-color: goldenrod; height: 20px;">
             <th>Film<br></th>
             <th>Prijs</th>
             <th><input type='submit' value='Verwijderen' id='verwijderknop' ><br><br></th>
         </tr>
+
          <tr th:each="film:${filmsInMandje}" th:object="${film}">
              <td th:text="${film.titel}" style="width: fit-content"></td>
              <td th:text="${film.prijs}"></td>
              <td> <input th:type="checkbox" th:name="verwijderid" th:value="${film.id}"></td>
          </tr>
+
          <tr>
              <td style="text-align: right; font-weight: bold">Totaalprijs:</td>
             <td th:text="${totalePrijs.waarde}" style="font-weight: bold"></td>

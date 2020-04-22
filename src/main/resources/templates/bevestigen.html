@@ -1,6 +1,6 @@
-<!DOCTYPE html>
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments::head('Bevestigen')"></head>
+<head th:replace="fragments::head(title='test')"></head>
+
 <body>
 <table>
     <tr>
@@ -9,17 +9,16 @@
         <td><a th:href="@{/klant}">Klant </a></td>
     </tr>
 </table>
-
 <h1>bevestigen</h1>
+
 
 <span th:text="${mandje.size()}"></span>
 film(s) voor
-<span th:object=${klant} th:text="|${klant.voornaam} ${klant.familienaam}"|></span>
+<span th:object="${klant}" th:text="${familieNaam}"></span>
 
 
-<form
-        th:object="${klant}"
-        th:action="@{|${klant.id}/bevestigd|}"
+<form th:object="${klant}"
+        th:action="@{|${id}/bevestigd|}"
         modelAttribute='reservatie'
         method='post'
         id='bevestigenform'>

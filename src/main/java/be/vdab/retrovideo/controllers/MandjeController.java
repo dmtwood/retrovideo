@@ -20,7 +20,7 @@ import java.util.Set;
 class MandjeController {
 
 	final Mandje mandje;
-	private final FilmsService filmsService;
+	final FilmsService filmsService;
 
 	MandjeController(Mandje mandje, FilmsService filmsService) {
 		this.mandje = mandje;
