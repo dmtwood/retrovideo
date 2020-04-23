@@ -14,7 +14,6 @@ import static org.junit.Assert.assertTrue;
 @JdbcTest
 @Import(JdbcKlantenRepository.class)
 @Sql("/insertKlant.sql")
-
 public class JdbcKlantenRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 	private JdbcKlantenRepository repository;
@@ -43,8 +42,10 @@ public class JdbcKlantenRepositoryTest extends AbstractTransactionalJUnit4Spring
 
 	@Test
 	public void read() {
-		long id = idVanTestKlant();
-		assertThat(repository.read(idVanTestKlant()).get().getFamilienaam()).isEqualTo("testfamilienaam");
+		assertThat(
+				repository.read(
+						idVanTestKlant()
+				).get().getFamilienaam()).isEqualTo("testfamilienaam");
 	}
 
 	@Test

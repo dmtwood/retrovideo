@@ -88,7 +88,7 @@ class ReservatieController {
 				modelAndView.addObject("mislukFilms", filmsService.read(filmId).get().getTitel());
 			}
 		}
-		redirectAttributes.addAttribute("mislukteFilms", nietGelukt);
+//		redirectAttributes.addAttribute("mislukteFilms", nietGelukt);
 		return modelAndView;
 	}
 

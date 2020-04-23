@@ -13,24 +13,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 @JdbcTest
 @Import(JdbcReservatiesRepository.class)
 @Sql("/insertReservatie.sql")
-
 public class JdbcReservatiesRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 	private static final String RESERVATIES = "reservaties";
 
 	private JdbcReservatiesRepository repository;
 
+	 JdbcReservatiesRepositoryTest(JdbcReservatiesRepository repository) {
+		this.repository = repository;
+	}
+
 	@Test
 	void create() {
-		long old = super.countRowsInTable(RESERVATIES);
-		repository.create(
-				new Reservatie(
-						100,
-						110,
-						LocalDateTime.now()
-				)
+			long newSize = super.countRowsInTable(RESERVATIES) +1;
+	 			repository.create(
+				new Reservatie(1, 1, LocalDateTime.now() )
+				);
+		assertThat(
+				super.countRowsInTable(RESERVATIES)
+		).isEqualTo(
+				newSize
 		);
-		assertThat(old).isEqualTo(super.countRowsInTable(RESERVATIES));
 	}
 
 }

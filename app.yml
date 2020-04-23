@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/retrovideo
+    username: cursist
+    password: cursist
+#  jpa:
+    database-platform:
+#    org.hibernate.dialect.MySQLDialect
