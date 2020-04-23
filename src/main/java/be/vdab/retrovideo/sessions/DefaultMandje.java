@@ -52,4 +52,9 @@ public class DefaultMandje implements Serializable, Mandje {
 	public void mandjeLeeg() {
 		filmIds.clear();
 	}
+
+	@Override
+	public void verwijderFilmsWeinigVoorraad() {
+		filmWeinigVoorraadIds.clear();
+	}
 }

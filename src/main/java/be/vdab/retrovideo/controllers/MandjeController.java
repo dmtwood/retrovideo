@@ -61,7 +61,7 @@ class MandjeController {
 	}
 
 	@GetMapping("?reedsInMandje")
-    ModelAndView toonMandjeIgvDubbeleFilm(@PathVariable long reedsInMandje) {
+    ModelAndView toonMandjeDubbeleFilm(@PathVariable long reedsInMandje) {
 		List<Film> films = maakFilmsVanFilmsIds(mandje.getFilmIds());
 		List<BigDecimal> prijzen = maakPrijzenVanFilmsIds(mandje.getFilmIds());
 		ModelAndView modelAndView = new ModelAndView(MANDJE_VIEW);

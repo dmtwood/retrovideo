@@ -14,4 +14,5 @@ public interface Mandje {
   TotalePrijs berekenTotalePrijs(List<BigDecimal> filmPrijzen);
   public void addToFilmWeinigVoorraad(long filmId);
   Set<Long> getFilmWeinigVoorraadIds();
+  void verwijderFilmsWeinigVoorraad();
 }

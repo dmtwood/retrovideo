@@ -69,8 +69,19 @@ class ReservatieController {
 			filmsService.read(id).ifPresent(film -> films.add(film.getTitel()));
 		}
 		modelAndView.addObject(
-				"mislukFilms", films
+				"mislukFilms", films // FEEDS BEVESTGD
 		);
+
+		Set<Long> filmIds = mandje.getFilmIds();
+		Set<String> filmsInMandje = new HashSet<>(filmIds.size());
+		for (long id : filmIds) {
+			filmsService.read(id).ifPresent(film -> filmsInMandje.add(film.getTitel()));
+		}
+		modelAndView.addObject(
+				"gelukteFilms", filmsInMandje
+		);
+
+
 		return modelAndView;
 	}
 
@@ -84,11 +95,17 @@ class ReservatieController {
 			Optional<Film> film = filmsService.read(filmId);
 			try {
 				reservatiesService.updateReservatiesEnFilms(reservatie, film.get());
+				modelAndView.addObject("gelukteFilms", filmsService.read(filmId).get().getTitel());
+				modelAndView.addObject("mislukFilms", null);
+//				mandje.mandjeLeeg();
+////				mandje.verwijderFilmsWeinigVoorraad();
 			} catch (TeWeinigVoorraadException ex) {
 				modelAndView.addObject("mislukFilms", filmsService.read(filmId).get().getTitel());
 			}
 		}
 //		redirectAttributes.addAttribute("mislukteFilms", nietGelukt);
+//		mandje.mandjeLeeg();
+//		mandje.verwijderFilmsWeinigVoorraad();
 		return modelAndView;
 	}
 
@@ -109,7 +126,7 @@ class ReservatieController {
 
 
 	@ExceptionHandler({TeWeinigVoorraadException.class})
-	public ModelAndView getSuperheroesUnavailable(TeWeinigVoorraadException ex) {
+	public ModelAndView teWeinigVoorraad(TeWeinigVoorraadException ex) {
 		return new ModelAndView("bevestigen", "teWeinigVoorraad", ex.getMessage());
 	}
 

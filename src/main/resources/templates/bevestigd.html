@@ -11,9 +11,9 @@
 <h1>Rapport</h1>
 
 
-<span th:if="${mislukFilms} == null">
+<span th:if="${gelukteFilms} != null">
     <p>De Reservatie is OK</p>
-    <p> Het mandje is terug leeg voor de volgende bestelling</p>
+<!--    <p> Het mandje is terug leeg voor de volgende bestelling</p>-->
 
 </span>
 
@@ -23,8 +23,6 @@
         <span th:text="${film}"></span>
     </span>
 </span>
-<p> Er zijn minder films in voorraad dan gereserveerd, de verhuring mag niet doorgaan.
-
 
     <!--<span th:each="titel:${mislukFilms}" th:text="${titel}">-->
     <!--</span>-->
