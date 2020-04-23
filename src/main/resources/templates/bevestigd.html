@@ -10,17 +10,25 @@
 
 <h1>Rapport</h1>
 
-<span th:if="${mislukteFilms} == null">
+<span th:if="${mislukFilms} == null">
     <p>De Reservatie is OK</p>
     <p> Het mandje is terug leeg voor de volgende bestelling</p>
 
 </span>
-<span th:if="${mislukteFilms}">
+<span th:if="${mislukFilms} != null">
     <p>Volgende reservatie(s) zijn mislukt:</p>
-    <ul th:forEach="titel:${param.mislukteFilms}" th:object="${titel}">
-            <li th:text="${filmTitel}" /></li>
-        </il:forEach>
-    </ul>
+    <span th:each="film:${mislukFilms}" th:text="${film}" >
+        <span th:text="${film}"></span>
+    </span>
 </span>
+<p> Er zijn minder films in voorraad dan gereserveerd, de verhuring mag niet doorgaan.
+
+
+<!--    <span th:if="${mislukteFilms} != null" th:text="${mislukteFilms}"> te weinig!!!!!!!!<span>-->
+<!--<span th:text=${mislukFilms}></span>-->
+
+<!--<span th:each="titel:${mislukFilms}" th:text="${titel}">-->
+<!--</span>-->
+
 </body>
 </html>

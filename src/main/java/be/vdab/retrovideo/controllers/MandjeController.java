@@ -31,7 +31,7 @@ class MandjeController {
 		this.filmsService = filmsService;
 	}
 
-	private List<Film> maakFilmsVanFilmsIds(Set<Long> filmIds) {
+	List<Film> maakFilmsVanFilmsIds(Set<Long> filmIds) {
 		List<Film> films = new ArrayList<>(filmIds.size());
 		for (long id : filmIds) {
 			filmsService.read(id).ifPresent(film -> films.add(film));

@@ -3,6 +3,7 @@ package be.vdab.retrovideo.services;
 import be.vdab.retrovideo.domain.Film;
 import be.vdab.retrovideo.exceptions.TeWeinigVoorraadException;
 import be.vdab.retrovideo.repositories.FilmsRepository;
+import be.vdab.retrovideo.sessions.Mandje;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,9 +22,11 @@ import java.util.Optional;
 class DefaultFilmsService implements FilmsService {
 
 	private final FilmsRepository filmsRepository;
+	private final Mandje mandje;
 
-	DefaultFilmsService(FilmsRepository filmsRepository) {
+	DefaultFilmsService(FilmsRepository filmsRepository, Mandje mandje) {
 		this.filmsRepository = filmsRepository;
+		this.mandje=mandje;
 	}
 
 	@Override
@@ -39,12 +42,14 @@ class DefaultFilmsService implements FilmsService {
 	@Override
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED)
 	public void update(Film film) {
-//		if (film.getVoorraad() < film.getGereserveerd()) {
-//			throw new TeWeinigVoorraadException("De voorraad is lager dan de reservaties, verhuring kan niet doorgaan.");
-//		} else {
+		System.out.println(film.getVoorraad() + "voorraad");
+		System.out.println(film.getGereserveerd() + "gereserveerd");
+		if (film.getVoorraad() > film.getGereserveerd()) {
 				filmsRepository.update(film);
-	}
-//		}
+		} else {
+		 throw new TeWeinigVoorraadException(film.getTitel() + "te weinig stock");
+		}
+		}
 		
 }
 

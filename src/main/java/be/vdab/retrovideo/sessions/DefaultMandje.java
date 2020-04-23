@@ -17,7 +17,10 @@ public class DefaultMandje implements Serializable, Mandje {
 
 	private static final long serialVersionUID = 1L;
 	private final Set<Long> filmIds = new LinkedHashSet<>();
+	private final Set<Long> filmWeinigVoorraadIds = new LinkedHashSet<>();
 
+	@Override
+	public void addToFilmWeinigVoorraad(long filmId) {filmWeinigVoorraadIds.add(filmId);}
 	@Override
 	public void addFilmId(long filmId) {
 		filmIds.add(filmId);
@@ -38,6 +41,10 @@ public class DefaultMandje implements Serializable, Mandje {
 		TotalePrijs totaal = new TotalePrijs(
 				filmPrijzen.stream().reduce((vorigeSom, getal) -> vorigeSom.add(getal)).orElse(BigDecimal.ZERO));
 		return totaal;
+	}
+
+	public Set<Long> getFilmWeinigVoorraadIds() {
+		return filmWeinigVoorraadIds;
 	}
 
 	// double??

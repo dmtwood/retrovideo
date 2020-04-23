@@ -54,8 +54,7 @@ public class JdbcFilmsRepository implements FilmsRepository {
    //     final String UPDATE_FILM = "update films set voorraad=?, gereserveerd=? where id=? and 0 < voorraad";
         final String UPDATE_FILM = "update films set voorraad=?, gereserveerd=? where id=? and gereserveerd < voorraad ";
         if (template.update(UPDATE_FILM, film.getVoorraad() - 1, film.getGereserveerd() + 1, film.getId()) == 0) {
-//            throw new TeWeinigVoorraadException("te weinig voorraad");
-
+                throw new TeWeinigVoorraadException("te weinigggg");
         }
     }
 

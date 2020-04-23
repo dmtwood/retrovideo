@@ -14,8 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.IntStream;
 
 /** Controller Class handling index klant requests (bis)
@@ -52,15 +51,29 @@ class ReservatieController {
 				"klantVoornaam",
 				klantenService.read(id).get().getVoornaam()
 		);
+		modelAndView.addObject(
+				"mislukteFilms",
+				mandje.getFilmWeinigVoorraadIds()
+		);
 		return modelAndView;
 	}
 
 	@GetMapping("{klantId}/bevestigd")
     ModelAndView bevestigdview(@PathVariable long klantId) {
 		ModelAndView modelAndView = new ModelAndView("bevestigd");
-		mandje.mandjeLeeg();
+
+		Set<Long> filmWeinigIds = mandje.getFilmWeinigVoorraadIds();
+		Set<String> films = new HashSet<>(filmWeinigIds.size());
+		System.out.println(filmWeinigIds.size() + " : aantal films in te weinig voorraad");
+		for (long id : filmWeinigIds) {
+			filmsService.read(id).ifPresent(film -> films.add(film.getTitel()));
+		}
+		modelAndView.addObject(
+				"mislukFilms", films
+		);
 		return modelAndView;
 	}
+
 
 	@PostMapping("{klantId}/bevestigd")
     ModelAndView bevestigd(@PathVariable long klantId, RedirectAttributes redirectAttributes) {
@@ -71,14 +84,16 @@ class ReservatieController {
 			Optional<Film> film = filmsService.read(filmId);
 			try {
 				reservatiesService.updateReservatiesEnFilms(reservatie, film.get());
-			} catch (FilmNietGevondenException ex) {
-				String filmNaam = film.get().getTitel();
-				nietGelukt = nietGelukt + "," + filmNaam;
+			} catch (TeWeinigVoorraadException ex) {
+				modelAndView.addObject("mislukFilms", filmsService.read(filmId).get().getTitel());
 			}
 		}
 		redirectAttributes.addAttribute("mislukteFilms", nietGelukt);
 		return modelAndView;
 	}
+
+
+
 
 	@GetMapping("{klantId}/bevestigd?mislukteFilms")
     ModelAndView misluktview(@PathVariable String mislukt) {

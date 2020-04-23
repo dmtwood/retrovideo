@@ -26,9 +26,12 @@ film(s) voor
     <input type='submit' value='Bevestigen' id='toevoegknop'>
 </form>
 
-<span th:if="${teWeinigVoorraad != null}" th:text="${teWeinigVoorraad}">te weinig!!!!!!!!</p>>
+<span th:if="${teWeinigVoorraad != null}" th:text="${teWeinigVoorraad}">te weinig!!!!!!!!<span>
 <span th:text=${teWeinigVoorraad}></span>
 
+<span th:each="film:${mislukteFilms}" th:object="${film}">
+ <span th:text="${film.title}"> </span>
+</span>
 
 <script>
     document.getElementById('bevestigenform').onsubmit = function() {

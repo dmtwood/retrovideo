@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -69,6 +71,7 @@ class FilmController {
 		if (eersteSize == tweedeSize) {
 			redirectAttributes.addAttribute("reedsInMandje", reedsInMandje);
 		}
+
 		return new ModelAndView(REDIRECT_MANDJE);
 	}
 }
