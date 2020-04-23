@@ -14,7 +14,8 @@
 
 <span th:text="${mandje.size()}"></span>
 film(s) voor
-<span th:object="${klant}" th:text="${familieNaam}"></span>
+<span th:text="${klantVoornaam}"></span>
+<span th:object="${klant}" th:text="${klant }"></span>
 
 
 <form th:object="${klant}"
@@ -25,8 +26,8 @@ film(s) voor
     <input type='submit' value='Bevestigen' id='toevoegknop'>
 </form>
 
-
-
+<span th:if="${teWeinigVoorraad != null}" th:text="${teWeinigVoorraad}">te weinig!!!!!!!!</p>>
+<span th:text=${teWeinigVoorraad}></span>
 
 
 <script>

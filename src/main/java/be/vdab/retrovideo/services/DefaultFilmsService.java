@@ -1,6 +1,7 @@
 package be.vdab.retrovideo.services;
 
 import be.vdab.retrovideo.domain.Film;
+import be.vdab.retrovideo.exceptions.TeWeinigVoorraadException;
 import be.vdab.retrovideo.repositories.FilmsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -38,8 +39,12 @@ class DefaultFilmsService implements FilmsService {
 	@Override
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED)
 	public void update(Film film) {
-		filmsRepository.update(film);
-		
+//		if (film.getVoorraad() < film.getGereserveerd()) {
+//			throw new TeWeinigVoorraadException("De voorraad is lager dan de reservaties, verhuring kan niet doorgaan.");
+//		} else {
+				filmsRepository.update(film);
 	}
-
+//		}
+		
 }
+

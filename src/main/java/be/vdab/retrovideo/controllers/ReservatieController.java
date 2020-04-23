@@ -3,15 +3,13 @@ package be.vdab.retrovideo.controllers;
 import be.vdab.retrovideo.domain.Film;
 import be.vdab.retrovideo.domain.Reservatie;
 import be.vdab.retrovideo.exceptions.FilmNietGevondenException;
+import be.vdab.retrovideo.exceptions.TeWeinigVoorraadException;
 import be.vdab.retrovideo.services.FilmsService;
 import be.vdab.retrovideo.services.KlantenService;
 import be.vdab.retrovideo.services.ReservatiesService;
 import be.vdab.retrovideo.sessions.Mandje;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -48,7 +46,11 @@ class ReservatieController {
 		);
 		modelAndView.addObject(
 				"klant",
-				klantenService.read(id)
+				klantenService.read(id).get().getFamilienaam()
+		);
+		modelAndView.addObject(
+				"klantVoornaam",
+				klantenService.read(id).get().getVoornaam()
 		);
 		return modelAndView;
 	}
@@ -63,19 +65,18 @@ class ReservatieController {
 	@PostMapping("{klantId}/bevestigd")
     ModelAndView bevestigd(@PathVariable long klantId, RedirectAttributes redirectAttributes) {
 		ModelAndView modelAndView = new ModelAndView("redirect:/klant/{klantId}/bevestigd");
-		String mislukt = "";
+		String nietGelukt = "";
 		for (long filmId : mandje.getFilmIds()) {
 			Reservatie reservatie = new Reservatie(klantId, filmId, LocalDateTime.now());
 			Optional<Film> film = filmsService.read(filmId);
 			try {
-				System.out.println("hier moet t gebeuren");
 				reservatiesService.updateReservatiesEnFilms(reservatie, film.get());
 			} catch (FilmNietGevondenException ex) {
 				String filmNaam = film.get().getTitel();
-				mislukt = mislukt + "," + filmNaam;
+				nietGelukt = nietGelukt + "," + filmNaam;
 			}
 		}
-		redirectAttributes.addAttribute("mislukteFilms", mislukt);
+		redirectAttributes.addAttribute("mislukteFilms", nietGelukt);
 		return modelAndView;
 	}
 
@@ -90,4 +91,11 @@ class ReservatieController {
 		);
 		return modelAndView;
 	}
+
+
+	@ExceptionHandler({TeWeinigVoorraadException.class})
+	public ModelAndView getSuperheroesUnavailable(TeWeinigVoorraadException ex) {
+		return new ModelAndView("bevestigen", "teWeinigVoorraad", ex.getMessage());
+	}
+
 }
