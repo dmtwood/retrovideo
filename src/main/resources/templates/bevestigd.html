@@ -4,14 +4,14 @@
 <body>
 <table>
   <tr>
-        <td><a th:href="@{/} ">Genres </a></td>
+        <td><a th:href="@{/klant/new} ">Genres </a></td>
     </tr>
 </table>
 
 <h1>Rapport</h1>
 
 
-<span th:if="${gelukteFilms} != null">
+<span th:if="${mislukFilms} == null">
     <p>De Reservatie is OK</p>
 <!--    <p> Het mandje is terug leeg voor de volgende bestelling</p>-->
 
@@ -19,9 +19,9 @@
 
 <span th:if="${mislukFilms} != null">
     <p>Volgende reservatie(s) zijn mislukt:</p>
-    <span th:each="film:${mislukFilms}" th:text="${film}" >
-        <span th:text="${film}"></span>
-    </span>
+    <ul th:each="film:${mislukFilms}" th:text="${film}" >
+        <span th:text="${film}"></span> <br><br>
+    </ul>
 </span>
 
     <!--<span th:each="titel:${mislukFilms}" th:text="${titel}">-->

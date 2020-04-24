@@ -1,5 +1,5 @@
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments::head(title='test')"></head>
+<head th:replace="fragments::head('Bevestigen')"></head>
 
 <body>
 <table>
@@ -9,14 +9,15 @@
         <td><a th:href="@{/klant}">Klant </a></td>
     </tr>
 </table>
+
 <h1>bevestigen</h1>
 
 
 <span th:text="${mandje.size()}"></span>
-film(s) voor
-<span th:text="${klantVoornaam}"></span>
-<span th:object="${klant}" th:text="${klant }"></span>
-
+film(s) voor: <br>
+<span th:object="${klantVoornaam}" th:text="${klantVoornaam}"></span>
+<span th:object="${klant}" th:text="${klant}"></span>
+<br><br>
 
 <form th:object="${klant}"
         th:action="@{|${id}/bevestigd|}"
@@ -26,12 +27,20 @@ film(s) voor
     <input type='submit' value='Bevestigen' id='toevoegknop'>
 </form>
 
-<span th:if="${teWeinigVoorraad != null}" th:text="${teWeinigVoorraad}">te weinig!!!!!!!!<span>
-<span th:text=${teWeinigVoorraad}></span>
-
-<span th:each="film:${mislukteFilms}" th:object="${film}">
+<!-- -->
+<span th:if="${mislukFilms} != null">
+Let op: te weinig voorraad voor:
+ <ul th:each="misFilm:${mislukFilms}" th:object="${misFilm}">
+            <span th:text=${misFilm}></span>.
+</ul>
+Boeking zal niet lukken nu.
+</span>
+<!--
+<span th:each="film:${mislukFilms}" th:object="${film}">
  <span th:text="${film.title}"> </span>
 </span>
+ -->
+
 
 <script>
     document.getElementById('bevestigenform').onsubmit = function() {

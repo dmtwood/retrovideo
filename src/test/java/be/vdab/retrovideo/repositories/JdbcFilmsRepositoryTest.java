@@ -3,7 +3,6 @@ package be.vdab.retrovideo.repositories;
 
 
 import be.vdab.retrovideo.domain.Film;
-import be.vdab.retrovideo.domain.Klant;
 import be.vdab.retrovideo.exceptions.FilmNietGevondenException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
@@ -12,11 +11,10 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
 import java.math.BigDecimal;
-import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
 
 
 @JdbcTest
