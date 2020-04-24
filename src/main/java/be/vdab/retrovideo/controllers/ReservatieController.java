@@ -1,6 +1,7 @@
 package be.vdab.retrovideo.controllers;
 
 import be.vdab.retrovideo.domain.Film;
+import be.vdab.retrovideo.domain.Klant;
 import be.vdab.retrovideo.domain.Reservatie;
 import be.vdab.retrovideo.exceptions.FilmNietGevondenException;
 import be.vdab.retrovideo.exceptions.TeWeinigVoorraadException;
@@ -42,28 +43,37 @@ class ReservatieController {
 
     private static final String MISLUKFILMS = "mislukFilms";
     private static final String GELUKTEFILMS = "gelukteFilms";
+    private static final String BEVESTIGEN_MAV = "bevestigen" ;
+    private static final String MANDJE = "mandje";
+    private static final String KLANT = "klant";
+    private static final String KLANTVOORNAAM = "klantVoornaam";
 
+    /**
+     * @param id id of Klant for Reservation
+     * @return bevestigen.html with Klant details and misluk/gelukte Film-titels
+     */
     @GetMapping("{id}")
     ModelAndView bevestigReservatie(@PathVariable long id) {
         ModelAndView modelAndView = new ModelAndView(
-                "bevestigen",
-                "mandje",
+                BEVESTIGEN_MAV,
+                MANDJE,
                 mandje.getFilmIds()
         );
         modelAndView.addObject(
-                "klant",
+                KLANT,
                 klantenService.read(id).get().getFamilienaam()
         );
         modelAndView.addObject(
-                "klantVoornaam",
+                KLANTVOORNAAM,
                 klantenService.read(id).get().getVoornaam()
         );
         Set<Long> filmIdss = mandje.getFilmIds();
         if (!filmIdss.isEmpty()) {
-
             Set<String> filmsInMandje = new HashSet<>(filmIdss.size());
             for (long id1 : filmIdss) {
-                filmsService.read(id1).ifPresent(film -> filmsInMandje.add(film.getTitel()));
+                filmsService.read(id1)
+                        .ifPresent(
+                                film -> filmsInMandje.add(film.getTitel()));
             }
             modelAndView.addObject(
                     GELUKTEFILMS, filmsInMandje
@@ -72,35 +82,38 @@ class ReservatieController {
         Set<Long> filmWeinigIds = mandje.getFilmWeinigVoorraadIds();
         if (!filmWeinigIds.isEmpty()) {
             Set<String> films = new HashSet<>(filmWeinigIds.size());
-            System.out.println(filmWeinigIds.size() + " : aantal films in te weinig voorraad");
             for (long idd : filmWeinigIds) {
-                filmsService.read(idd).ifPresent(film -> films.add(film.getTitel()));
+                filmsService.read(idd)
+                        .ifPresent(
+                                film -> films.add(film.getTitel()));
             }
             modelAndView.addObject(
-                    MISLUKFILMS, films // FEEDS BEVESTGD
+                    MISLUKFILMS, films
             );
         }
-//		modelAndView.addObject(
-//				"mislukteFilms",
-//				mandje.getFilmWeinigVoorraadIds().stream().forEach( id -> filmsService.);
-//		);
         return modelAndView;
     }
 
 
+    /**
+     * @param klantId id of Klant whose reservation is handled
+     * @return bevestigd.html with Film-details of non-reservations (when voorraad < gereserveerd)
+     */
     @GetMapping("{klantId}/bevestigd")
     ModelAndView bevestigdview(@PathVariable long klantId) {
         ModelAndView modelAndView = new ModelAndView("bevestigd");
-
         Set<Long> filmWeinigIds = mandje.getFilmWeinigVoorraadIds();
         if (!filmWeinigIds.isEmpty()) {
             Set<String> films = new HashSet<>(filmWeinigIds.size());
-            System.out.println(filmWeinigIds.size() + " : aantal films in te weinig voorraad");
             for (long id : filmWeinigIds) {
-                filmsService.read(id).ifPresent(film -> films.add(film.getTitel()));
+                filmsService.read(id)
+                        .ifPresent(
+                                film -> films.add(film.getTitel()
+                                )
+                        );
             }
             modelAndView.addObject(
-                    MISLUKFILMS, films // FEEDS BEVESTGD
+                    MISLUKFILMS, films
             );
         }
 
@@ -118,41 +131,47 @@ class ReservatieController {
         return modelAndView;
     }
 
+    private static final String REDIRECT_BEVESTIGD = "redirect:/klant/{klantId}/bevestigd";
     @PostMapping("{klantId}/bevestigd")
     ModelAndView bevestigd(@PathVariable long klantId, RedirectAttributes redirectAttributes) {
-        ModelAndView modelAndView = new ModelAndView("redirect:/klant/{klantId}/bevestigd");
-        String nietGelukt = "";
+        ModelAndView modelAndView = new ModelAndView(REDIRECT_BEVESTIGD);
         for (long filmId : mandje.getFilmIds()) {
             Reservatie reservatie = new Reservatie(klantId, filmId, LocalDateTime.now());
             Optional<Film> film = filmsService.read(filmId);
             try {
                 reservatiesService.updateReservatiesEnFilms(reservatie, film.get());
-                modelAndView.addObject(MISLUKFILMS, filmsService.read(filmId).get().getTitel());
-//				modelAndView.addObject("mislukFilms", null);
-//				mandje.mandjeLeeg();
-////				mandje.verwijderFilmsWeinigVoorraad();
+                modelAndView.addObject(
+                        MISLUKFILMS,
+                        filmsService.read(filmId).get().getTitel()); //nodig?
             } catch (TeWeinigVoorraadException ex) {
-                modelAndView.addObject(MISLUKFILMS, filmsService.read(filmId).get().getTitel());
+                modelAndView.addObject(
+                        MISLUKFILMS,
+                        filmsService.read(filmId).get().getTitel());
             }
         }
-//		redirectAttributes.addAttribute("mislukteFilms", nietGelukt);
-//		mandje.mandjeLeeg();
-//		mandje.verwijderFilmsWeinigVoorraad();
         return modelAndView;
     }
 
+
+    private static final String INDEX = "index";
+    private static final String GENRES = "genres";
+
+    /**
+     * handles request to Genres when Reservatie is processed
+     * clear mandje variables and objects holding Films titel from handled reservation
+     * @return index page cleared
+     */
     @GetMapping("new")
     ModelAndView index() {
         ModelAndView mAV = new ModelAndView(
-                "index",
-                "genres",
+                INDEX,
+                GENRES,
                 genresService.findUniekeGenres()
         );
         mandje.mandjeLeeg();
         mandje.verwijderFilmsWeinigVoorraad();
         ModelAndView renewKlantenObjects = new ModelAndView(
-                "klant");
-
+                KLANT);
         renewKlantenObjects.addObject(
                 MISLUKFILMS,
                 null
@@ -165,22 +184,19 @@ class ReservatieController {
     }
 
 
-//	@GetMapping("{klantId}/bevestigd?mislukteFilms")
-//    ModelAndView misluktview(@PathVariable String mislukt) {
-//		ModelAndView modelAndView = new ModelAndView(
-//				"bevestigd"
-//		);
-//		String[] gesplitstefilms = mislukt.split(",");
-//		modelAndView.addObject(
-//				"mislukteFilms", gesplitstefilms
-//		);
-//		return modelAndView;
-//	}
+    private static final String TE_WEINIG_VOORRAAD = "teWeinigVoorraad";
 
-
+    /**
+     * catch Custom TeWeinigVoorraadException (when voorraad < gereserveerd)
+     * @return bevestigen.html with Te Weinig Voorraad object
+     */
     @ExceptionHandler({TeWeinigVoorraadException.class})
     public ModelAndView teWeinigVoorraad(TeWeinigVoorraadException ex) {
-        return new ModelAndView("bevestigen", "teWeinigVoorraad", ex.getMessage());
+        return new ModelAndView(
+                BEVESTIGEN_MAV,
+                TE_WEINIG_VOORRAAD,
+                ex.getMessage()
+        );
     }
 
 }

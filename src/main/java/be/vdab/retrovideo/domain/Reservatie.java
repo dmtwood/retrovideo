@@ -8,10 +8,16 @@ public class Reservatie {
 	@Positive private long filmId;
 	private LocalDateTime reservatie = LocalDateTime.now();
 
-	public Reservatie(long klantId, long filmId, LocalDateTime reservatie) {
+	/**
+	 * Constructor of Reservatie objects
+	 * @param klantId id of Klant in DB (FK)
+	 * @param filmId id of Film in DB (FK)
+	 * @param tijdVanReservatie Local Date and Time of processing
+	 */
+	public Reservatie(long klantId, long filmId, LocalDateTime tijdVanReservatie) {
 		this.klantId = klantId;
 		this.filmId = filmId;
-		this.reservatie = reservatie;
+		this.reservatie = tijdVanReservatie;
 	}
 	
 	public long getKlantId() {

@@ -24,7 +24,8 @@ public class JdbcGenresRepositoryTest extends AbstractTransactionalJUnit4SpringC
         ).isEqualTo(
                 (super.countRowsInTable("genres")
                 )
-//                        repository.findUniekeGenres()).size()
         );
     }
+
+
 }

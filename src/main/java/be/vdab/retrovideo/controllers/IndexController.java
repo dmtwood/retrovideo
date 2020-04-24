@@ -10,7 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/")
-/** Controller Class handling index and genres/id requests
+/**
+ * Controller Class handling index and genres/id requests
  * depends on filmService and GenreService
  * creates IndexController-Bean
  * @Date 21.04.2020
@@ -55,6 +56,5 @@ class IndexController {
 				filmsService.findByGenre(genreId)
 		);
 	}
-
 
 }

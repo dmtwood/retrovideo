@@ -6,7 +6,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+
 import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -15,25 +17,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Sql("/insertReservatie.sql")
 public class JdbcReservatiesRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
 
-	private static final String RESERVATIES = "reservaties";
+    private static final String RESERVATIES = "reservaties";
 
-	private JdbcReservatiesRepository repository;
+    private JdbcReservatiesRepository repository;
 
-	 JdbcReservatiesRepositoryTest(JdbcReservatiesRepository repository) {
-		this.repository = repository;
-	}
+    JdbcReservatiesRepositoryTest(JdbcReservatiesRepository repository) {
+        this.repository = repository;
+    }
 
-	@Test
-	void create() {
-			long newSize = super.countRowsInTable(RESERVATIES) +1;
-	 			repository.create(
-				new Reservatie(1, 1, LocalDateTime.now() )
-				);
-		assertThat(
-				super.countRowsInTable(RESERVATIES)
-		).isEqualTo(
-				newSize
-		);
-	}
+    @Test
+    void create() {
+        long newSize = super.countRowsInTable(RESERVATIES) + 1;
+        repository.create(
+                new Reservatie(1, 1, LocalDateTime.now())
+        );
+        assertThat(
+                super.countRowsInTable(RESERVATIES)
+        ).isEqualTo(
+                newSize
+        );
+    }
 
 }

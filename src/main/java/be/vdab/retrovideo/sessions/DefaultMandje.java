@@ -11,6 +11,10 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * creates a Mandje Session to handle a Reservatie
+ * methods to add/delete Films and save Film-ids that can/can't by rented at this moment (voorraad > gereserveerd)
+ */
 @Component
 @SessionScope
 public class DefaultMandje implements Serializable, Mandje {

@@ -15,6 +15,15 @@ public class Film {
 	@Positive private long gereserveerd;
 	@NumberFormat(pattern = "€ 0.00") private BigDecimal prijs;
 
+	/**
+	 * Constructor of Film objects
+	 * @param id of Film in DB (PK)
+	 * @param genreId id of Genre
+	 * @param titel String holding the title
+	 * @param voorraad how many are still avavailable
+	 * @param gereserveerd how many are already rented
+	 * @param prijs how much is the renting-fee
+	 */
 public Film(long id, long genreId, String titel, long voorraad, long gereserveerd, BigDecimal prijs) {
 		this.id = id;
 		this.genreId = genreId;

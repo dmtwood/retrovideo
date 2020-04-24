@@ -29,17 +29,33 @@ public class JdbcKlantenRepositoryTest extends AbstractTransactionalJUnit4Spring
 		List<Klant> klanten = repository.findByFamilienaamBevat("te");
 		String vorigeNaam = "";
 		for (Klant klant : klanten) {
-			assertTrue(klant.getFamilienaam().toLowerCase().contains("te"));
-			assertTrue(vorigeNaam.compareTo(klant.getFamilienaam()) <= 0);
+			assertTrue(
+					klant
+							.getFamilienaam()
+							.toLowerCase()
+							.contains("te")
+			);
+			assertTrue(
+					vorigeNaam
+							.compareTo(
+									klant.getFamilienaam()
+							) <= 0);
 			vorigeNaam = klant.getFamilienaam();
 		}
 		long aantalKlanten = super.jdbcTemplate
-				.queryForObject("select count(*) from klanten where familienaam like '%te%'", Long.class);
+				.queryForObject(
+						"select count(*) from klanten where familienaam like '%te%'",
+						Long.class
+				);
 		assertEquals(aantalKlanten, klanten.size());
 	}
 
 	 long idVanTestKlant() {
-		return super.jdbcTemplate.queryForObject("select id from klanten where familienaam='testfamilienaam'", Long.class);
+		return super.jdbcTemplate
+				.queryForObject(
+						"select id from klanten where familienaam='testfamilienaam'",
+						Long.class
+				);
 	}
 
 	@Test
@@ -47,12 +63,19 @@ public class JdbcKlantenRepositoryTest extends AbstractTransactionalJUnit4Spring
 		assertThat(
 				repository.read(
 						idVanTestKlant()
-				).get().getFamilienaam()).isEqualTo("testfamilienaam");
+				).get()
+						.getFamilienaam()
+		).isEqualTo(
+				"testfamilienaam"
+		);
 	}
 
 	@Test
 	public void findByOnbestaandeIdVindtGeenKlant() {
-		assertThat(repository.read(-1)).isEmpty();
+		assertThat(
+				repository
+						.read(-1)
+		).isEmpty();
 	}
 
 }

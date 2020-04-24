@@ -34,7 +34,10 @@ class MandjeController {
 	List<Film> maakFilmsVanFilmsIds(Set<Long> filmIds) {
 		List<Film> films = new ArrayList<>(filmIds.size());
 		for (long id : filmIds) {
-			filmsService.read(id).ifPresent(film -> films.add(film));
+			filmsService.read(id).
+					ifPresent(
+							films::add
+					);
 		}
 		return films;
 	}
@@ -42,34 +45,53 @@ class MandjeController {
 	private List<BigDecimal> maakPrijzenVanFilmsIds(Set<Long> filmIds) {
 		List<BigDecimal> prijzen = new ArrayList<>(filmIds.size());
 		for (long id : filmIds) {
-			filmsService.read(id).ifPresent(film -> prijzen.add(film.getPrijs()));
+			filmsService.read(id)
+					.ifPresent(
+							film -> prijzen.add(film.getPrijs())
+					);
 		}
 		return prijzen;
 	}
 
-	private final static String MANDJE_VIEW = "mandje";
-
+	private final static String MANDJE_MAV = "mandje";
+	private static final String  FILMSINMANDJE = "filmsInMandje";
+	private static final String TOTALEPRIJS = "totalePrijs";
 	@GetMapping()
     ModelAndView toonMandje() {
 		List<Film> films = maakFilmsVanFilmsIds(mandje.getFilmIds());
 		List<BigDecimal> prijzen = maakPrijzenVanFilmsIds(mandje.getFilmIds());
-		ModelAndView modelAndView = new ModelAndView(MANDJE_VIEW);
-		modelAndView.addObject("filmsInMandje", films);
-
-		modelAndView.addObject("totalePrijs", mandje.berekenTotalePrijs(prijzen));
+		ModelAndView modelAndView = new ModelAndView(MANDJE_MAV);
+		modelAndView.addObject(
+				FILMSINMANDJE,
+				films
+		);
+		modelAndView.addObject(
+				TOTALEPRIJS,
+				mandje.berekenTotalePrijs(prijzen)
+		);
 		return modelAndView;
 	}
 
-	@GetMapping("?reedsInMandje")
+	private static final String REEDSINMANDJE = "reedsInMandje";
+	@GetMapping("?reedsInMandje") // nog nodig?
     ModelAndView toonMandjeDubbeleFilm(@PathVariable long reedsInMandje) {
 		List<Film> films = maakFilmsVanFilmsIds(mandje.getFilmIds());
 		List<BigDecimal> prijzen = maakPrijzenVanFilmsIds(mandje.getFilmIds());
-		ModelAndView modelAndView = new ModelAndView(MANDJE_VIEW);
-		modelAndView.addObject("filmsInMandje", films);
-		modelAndView.addObject("totalePrijs", mandje.berekenTotalePrijs(prijzen));
-		modelAndView.addObject("reedsInMandje", reedsInMandje);
+		ModelAndView modelAndView = new ModelAndView(MANDJE_MAV);
+		modelAndView.addObject(
+				FILMSINMANDJE,
+				films
+		);
+		modelAndView.addObject(
+				TOTALEPRIJS,
+				mandje.berekenTotalePrijs(prijzen)
+		);
+		modelAndView.addObject(
+				REEDSINMANDJE,
+				reedsInMandje
+		);
 		return modelAndView;
-	}
+	} // nog nodig?
 
 	private final static String REDIRECT_NA_DELETE = "redirect:/mandje";
 

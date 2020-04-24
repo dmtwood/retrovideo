@@ -29,43 +29,62 @@ class JdbcFilmsRepositoryTest extends AbstractTransactionalJUnit4SpringContextTe
 		this.repository = repository;
 	}
 
+	private static final String TEST = "test";
 	private long idVanTestFilm() {
-		return super.jdbcTemplate.queryForObject(
-				"select id from films where titel ='test'", Long.class);
+		return super.jdbcTemplate
+				.queryForObject(
+				"select id from films where titel ='test'", Long.class
+				);
 	};
+
 		@Test
 	public void findByGenre() {
 		assertThat(
-//				jdbcTemplate.queryForObject(
-				repository.findByGenre(
-						1).size()
-		).isEqualTo(super.countRowsInTableWhere(FILMS, "genreid = 1")
+				repository
+						.findByGenre(1)
+						.size()
+		).isEqualTo(
+				super.countRowsInTableWhere(
+						FILMS,
+						"genreid = 1"
+				)
 		);
 	}
 
 	@Test
 	public void read() {
-
 		assertThat(
-				repository.read(idVanTestFilm())
-						.get().getTitel()
-		).isEqualTo("test");
+				repository
+						.read(idVanTestFilm())
+						.get()
+						.getTitel()
+		).isEqualTo(
+				TEST
+		);
 	}
 
 	@Test
 	public void readOnbestaandeFilm() {
-		assertThat(repository.read(-1)).isNotPresent();
+		assertThat(
+				repository
+						.read(-1)
+		).isNotPresent();
 	}
 
 	@Test
 	public void update() {
 		long id = idVanTestFilm();
-		Film film = new Film( id, 1, "test", 10, 6, BigDecimal.TEN);
-		repository.update(film);
-		long test = repository.read(idVanTestFilm()).get().getGereserveerd();
-		assertThat(test).isEqualTo(7);
+		Film film = new Film( id, 1, TEST, 10, 6, BigDecimal.TEN);
+		repository
+				.update(film);
+		long test7 = repository
+				.read(idVanTestFilm())
+				.get()
+				.getGereserveerd();
+		assertThat(
+				test7
+		).isEqualTo(7);
 	}
-
 
 	@Test
 	public void updateOnbestaandeFilm() {
@@ -73,7 +92,7 @@ class JdbcFilmsRepositoryTest extends AbstractTransactionalJUnit4SpringContextTe
 					FilmNietGevondenException.class
 			).isThrownBy(
 					() -> repository.update(
-							new Film( - 1, 2, "test", 10, 6, BigDecimal.TEN)
+							new Film( - 1, 2, TEST, 10, 6, BigDecimal.TEN)
 					)
 			);
 	}
