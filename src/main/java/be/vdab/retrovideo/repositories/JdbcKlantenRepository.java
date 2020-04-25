@@ -1,7 +1,6 @@
 package be.vdab.retrovideo.repositories;
 
 import be.vdab.retrovideo.domain.Klant;
-import jdk.jfr.Description;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
